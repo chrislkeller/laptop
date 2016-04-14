@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+curl -s https://raw.github.com/xdissent/ievms/master/ievms.sh | env IEVMS_VERSIONS="8 9" REUSE_XP="no" bash
+]]></content>
+  <tabTrigger>IEvms</tabTrigger>
+  <description>IE vms</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

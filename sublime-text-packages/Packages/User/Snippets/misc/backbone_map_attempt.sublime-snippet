@@ -1,0 +1,102 @@
+<snippet>
+  <content><![CDATA[
+        mapView: function(data){
+            //$('#data-results').addClass('hidden');
+            //$('#content-map-canvas').removeClass('hidden');
+
+            //var marker = new App.Models.Marker();
+            //var addMarkerToMap = new App.Views.initialMapMarker({model: marker});
+
+            var places = new Backbone.GoogleMaps.LocationCollection([{
+                title: "Walker Art Center",
+                lat: 44.9796635,
+                lng: -93.2748776
+            }, {
+                title: "Science Museum of Minnesota",
+                lat: 44.9429618,
+                lng: -93.0981016
+            }]);
+
+            var map = new google.maps.Map($('#content-map-canvas')[0], {
+                zoom: 4,
+                center: new google.maps.LatLng(39.828116,-98.579392),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scrollwheel: false,
+                draggable: true,
+                mapTypeControl: false,
+                navigationControl: true,
+                streetViewControl: false,
+                panControl: false,
+                scaleControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                navigationControlOptions: {
+                    style: google.maps.NavigationControlStyle.LARGE,
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                }
+            });
+
+            /*
+            var markerCollectionView = new Backbone.GoogleMaps.MarkerCollectionView({
+                collection: places,
+                map: map
+            });
+
+            markerCollectionView.render();
+            */
+
+        },
+
+    /* operations for initial map */
+
+    // model for inital map that is loaded
+    App.Models.initialMap = Backbone.Model.extend({
+        defaults: {
+            zoom: 4,
+            center: new google.maps.LatLng(39.828116,-98.579392),
+            scrollwheel: false,
+            draggable: true,
+            mapTypeControl: false,
+            navigationControl: true,
+            streetViewControl: false,
+            panControl: false,
+            scaleControl: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            navigationControlOptions: {
+                style: google.maps.NavigationControlStyle.LARGE,
+                position: google.maps.ControlPosition.RIGHT_TOP
+            }
+        },
+
+        marker: {
+            id: null,
+            position: new google.maps.LatLng(39.828116,-98.579392),
+            map: map,
+            icon: new google.maps.MarkerImage('/static/images/new-instagram-logo.png'),
+            title: 'Instagram Photo',
+            clickable: true
+        }
+    });
+
+
+    // view for inital map that is loaded
+    App.Views.initialMap = Backbone.View.extend({
+        id: 'content-map-canvas',
+
+        initialize: function(){
+            this.map = new google.maps.Map(this.el, this.model.attributes);
+            this.render();
+        },
+
+        render: function(){
+            $('#content-map-canvas').replaceWith(this.el);
+        }
+
+    });
+
+
+
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>26}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>25}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>backbone_map_attempt</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

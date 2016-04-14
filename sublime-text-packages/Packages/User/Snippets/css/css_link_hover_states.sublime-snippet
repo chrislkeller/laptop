@@ -1,0 +1,11 @@
+<snippet>
+  <content><![CDATA[
+a:link {color: #; text-decoration: underline;}
+a:visited {color: #; text-decoration: underline;}
+a:hover, a:focus {color: #; text-decoration: none;}
+a:active {color: #; text-decoration: none;}
+]]></content>
+  <tabTrigger></tabTrigger>
+  <description>CSS links sequence</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -371,7 +371,6 @@ set -e
 # _init_qgis
 # _init_sublime_text
 
-
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME

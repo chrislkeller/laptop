@@ -1,0 +1,24 @@
+<snippet>
+  <content><![CDATA[
+# import libraries
+import urllib
+import urllib2
+import time, datetime
+from dateutil import parser
+
+# set page to scrape to a variable
+prefixUrl = 'http://www.chrislkeller.com/'
+
+# print begin status
+print ('Started writing data to file at %s' % datetime.datetime.now().strftime('%b %d, %Y at %I:%M %p'))
+
+# write the page to a file
+file('your_new_file.txt', 'wb').write(urllib2.urlopen(prefixUrl).read())
+
+# print end status
+print ('Completed at %s' % datetime.datetime.now().strftime('%b %d, %Y at %I:%M %p'))
+]]></content>
+  <tabTrigger>textfilescrape</tabTrigger>
+  <description>data to text file</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

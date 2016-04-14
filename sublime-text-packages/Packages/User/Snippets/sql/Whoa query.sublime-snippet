@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+SELECT
+    district, 100 * (CAST(SUM(hispanic) AS decimal)) / (CAST(SUM(students) AS decimal)) AS Percentage
+FROM
+    base_api_updated_2012
+WHERE
+    type='S'
+AND
+    county='Orange'
+AND
+    standing<>'no_score'
+GROUP BY
+    district
+ORDER BY
+    2 DESC
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>23}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>22}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Whoa query</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

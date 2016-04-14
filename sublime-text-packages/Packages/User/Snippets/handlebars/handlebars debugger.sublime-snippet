@@ -1,0 +1,15 @@
+<snippet>
+  <content><![CDATA[
+// add handlebars debugger
+function handlebarsDebugHelper(){
+    Handlebars.registerHelper("debug", function(optionalValue) {
+        console.log("Current Context");
+        console.log("====================");
+        console.log(this);
+    });
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>34}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>33}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>handlebars debugger</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

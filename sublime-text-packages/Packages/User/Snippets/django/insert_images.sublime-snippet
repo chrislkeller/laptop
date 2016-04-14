@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<img src="{{ MEDIA_URL }}/{{ issue.user_submited_photo.url }}" width="100px" />
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>insert images</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

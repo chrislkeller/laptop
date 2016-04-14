@@ -1,0 +1,29 @@
+<snippet>
+  <content><![CDATA[
+####Using Beautiful Soup
+find all td
+
+new = soup.findAll('td')
+
+find all a
+
+new = soup.findAll('a')
+
+find first two anchor tags these two constructs are equal
+
+new = soup.findAll("a", limit=2)
+
+new = soup("a", limit=2)
+
+find all instances of Joel DeSpain
+
+new = soup.findAll(text=re.compile("Joel DeSpain"))
+
+find all tags with instances of given text
+
+new = soup.findAll("td", text=re.compile("abduction"))
+]]></content>
+  <tabTrigger>usesoup</tabTrigger>
+  <description>SoupUse</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

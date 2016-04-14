@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+# set paths for ruby & python & stuff
+export PATH="/usr/local/bin:/usr/local/share/python:/usr/bin/sqlite3:/Users/ckeller/.rvm/bin:~/Programming/3scripts-dotfiles/shell-scripts:/usr/bin:/bin:/usr/sbin:/sbin"
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>old path</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

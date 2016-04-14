@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyAtS1OYyuRY0inb23BK0nuGId3FiOC6Rb8&sensor=false&region=us"></script>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>14}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>13}, "trigger"=>{"CF$UID"=>15}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>KPCC Maps API Key</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

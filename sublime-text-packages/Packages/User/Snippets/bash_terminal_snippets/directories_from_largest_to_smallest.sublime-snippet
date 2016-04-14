@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+du -k > du.txt; sort -nr du.txt > sorted_du.txt; less sorted_du.txt
+]]></content>
+  <tabTrigger></tabTrigger>
+  <description>List files and directories sorted from largest to smallest</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

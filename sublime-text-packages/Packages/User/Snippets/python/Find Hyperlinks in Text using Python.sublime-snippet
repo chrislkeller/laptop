@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+import re
+
+myS${1}s my tweet check it out http://tinyurl.com/blah"
+
+r = re.compile(r"(http://[^ ]+)")
+print r.sub(r'<a href="\1">\1</a>', myString)
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>50}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>49}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>Find Hyperlinks in Text using Python</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

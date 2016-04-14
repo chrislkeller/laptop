@@ -1,0 +1,20 @@
+<snippet>
+  <content><![CDATA[
+def dict_to_db(record, model, create=True):                                     
+    """Creates/updates instance of model, and sets it attributes to entries of  
+    the dict                                                                    
+    """                                                                         
+    if create:                                                                  
+        obj = model()                                                           
+    else:                                                                       
+        obj = model                                                             
+    for field in obj._meta.fields:                                              
+        if field.name in record:                                                
+            setattr(obj, field.name, record[field.name])                        
+    obj.save()                                                                  
+    return obj
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>14}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>13}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Create Model From Dict</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<iframe src="http://projects.scpr.org/static/maps/veterans-day-map-kqed/" width="640px" height="900px" scrolling="no" frameborder="0" />
+]]></content>
+  <tabTrigger>kframe</tabTrigger>
+  <description>iFrame</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

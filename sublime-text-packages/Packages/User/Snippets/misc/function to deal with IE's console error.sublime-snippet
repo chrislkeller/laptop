@@ -1,0 +1,11 @@
+<snippet>
+  <content><![CDATA[
+// function to deal with IE's console error
+function log(obj) {
+    if (window.console && console.log) console.log(obj);
+};
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>function to deal with IE's console error</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

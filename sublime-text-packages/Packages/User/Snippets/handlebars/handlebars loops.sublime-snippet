@@ -1,0 +1,49 @@
+<snippet>
+  <content><![CDATA[
+// looping through to create a list
+function handlebarsNewLoopHelper(){
+    Handlebars.registerHelper('list', function(context, options) {
+
+        var out = '';
+
+        for(var i=0; i<context.length; i++) {
+                out += '<div class="span2"></div>';
+                out += '<li>' + options.fn(context[i]) + '</li>';
+
+            if( i > 0 && i % 4 == 0) {
+                out += '<div class="row-fluid"></div>';
+            };
+
+        }
+
+        return out;
+    });
+};
+// end
+
+// looping through to create a list
+function handlebarsNewLoopHelper(){
+    Handlebars.registerHelper('list', function(context, options) {
+
+        var out = '';
+
+        out += '<div id="built-list">';
+
+        jqueryNoConflict.each(context, function(i){
+            out += '<div class="span2">';
+            out += '<p>' + options.fn(context[i]) + '</p>';
+            out += '</div>';
+        });
+
+        out += '</div>';
+
+        return out;
+
+    });
+};
+// end
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>25}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>24}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>handlebars loops</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,96 @@
+<snippet>
+  <content><![CDATA[
+<style type="text/css">
+.kpcc-data-table {width: 100%; font-family: "proxima-nova", "helvetica neue", helvetica, arial, sans-serif;}
+
+.kpcc-data-table td, .kpcc-data-table th {font-size: 15px; font-weight: 700; line-height: 20px; margin-top: 10px; margin-bottom: 10px; text-align: center;}
+.kpcc-data-table td.base-cell {color: #B24401; text-transform: uppercase;}
+</style>
+
+<div>
+    <table class="kpcc-data-table">
+        <thead>
+            <tr>
+                <th class="comparison-cell">WalMart</th>
+                <th class="base-cell">Product</th>
+                <th class="comparison-cell">Super King</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="comparison-cell">$2.28</td>
+                <td class="base-cell">Cheddar cheese (8 oz.)</td>
+                <td class="comparison-cell">$2.89</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$1.84 (12)</td>
+                <td class="base-cell">Eggs</td>
+                <td class="comparison-cell">$3.69 (20)</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$1.92</td>
+                <td class="base-cell">Flour</td>
+                <td class="comparison-cell">$1.50</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$2.98</td>
+                <td class="base-cell">Milk</td>
+                <td class="comparison-cell">$3.49</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$.64 (56 sheets)</td>
+                <td class="base-cell">Paper Towels</td>
+                <td class="comparison-cell">$.79 (60 sheets)</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$11.97</td>
+                <td class="base-cell">Tide laundry detergent<br />with Downy (100 oz.)</td>
+                <td class="comparison-cell">$14.99</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$1.54 (12.8 oz.)</td>
+                <td class="base-cell">Tortillas</td>
+                <td class="comparison-cell">$1.39 (11 oz.)</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$1.18</td>
+                <td class="base-cell">Wheat bread</td>
+                <td class="comparison-cell">$1.89</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <p><em>Prices surveyed between March 15 and March 20.</em></p>
+</div>
+
+<br />
+
+<div>
+    <table class="kpcc-data-table">
+        <thead>
+            <tr>
+                <th class="comparison-cell">WalMart</th>
+                <th class="base-cell">Product</th>
+                <th class="comparison-cell">Toto Beauty<br />Supply</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="comparison-cell">$3.48</td>
+                <td class="base-cell">Hair Gel</td>
+                <td class="comparison-cell">$3.99</td>
+            </tr>
+            <tr>
+                <td class="comparison-cell">$7.47</td>
+                <td class="base-cell">Hair polish</td>
+                <td class="comparison-cell">$8.49</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><em>Prices surveyed between March 15 and March 20.</em></p>
+</div>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>9}, "content"=>{"CF$UID"=>24}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>23}, "version"=>{"CF$UID"=>8}}</tabTrigger>
+  <description>comparison chart</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

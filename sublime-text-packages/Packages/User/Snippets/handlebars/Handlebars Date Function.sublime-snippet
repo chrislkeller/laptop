@@ -1,0 +1,27 @@
+<snippet>
+  <content><![CDATA[
+// begin dateFormatFunction
+function handlebarsFormatDateForDisplay(){
+    Handlebars.registerHelper('dateFormat', function(context, block) {
+        if (window.moment) {
+            return takeTime(context);
+        }else{
+            return context;
+        };
+    });
+};
+// end
+
+// format date/time
+function takeTime(dateInput) {
+    var dateFormat = 'MMM. D, h:mm a';
+    //var dateFormat = 'ddd., MMM., D, YYYY, h:mm a';
+    var dateOutput = moment(dateInput).format(dateFormat);
+    return dateOutput;
+};
+// end
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>37}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>36}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Handlebars Date Function</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,42 @@
+<snippet>
+  <content><![CDATA[
+test_list = [
+${1}name': 'Los Angeles County Office of Education', 'test_score': 0},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 13},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 20},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': None},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 4},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 18},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 13},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 33},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 28},
+    {'district_name': 'Los Angeles County Office of Education', 'test_score': 31},
+]
+
+def single_query_against_database():
+    try:
+        # creates connection to the database
+        connection = psycopg2.connect(host='localhost', database='star_results_2013', user='ckeller', password='')
+        cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # runs sql query against database
+        cursor.execute("SELECT * FROM five_county_district_results_2013 WHERE test_type='C' AND test_id=7 AND subgroup_id=1 AND school_code=0 AND district_code=75341")
+        rows = cursor.fetchall()
+        test_scores = []
+        for row in rows:
+            test_scores.append(row['percentage_at_or_above_proficient'])
+        summary = sum(test_scores)/len(test_scores)
+        logging.debug('%s - %s' % (row['district_name'], summary))
+    except psycopg2.DatabaseError, e:
+        print 'Error %s' % (e)
+        sys.exit(1)
+    finally:
+        if connection:
+            connection.close()
+
+#if __name__ == "__main__": single_query_against_database()
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>53}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>52}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>single_query_against_database</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

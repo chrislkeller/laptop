@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<img src="${1}" />
+]]></content>
+  <tabTrigger>img</tabTrigger>
+  <description>img</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

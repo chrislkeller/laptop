@@ -1,0 +1,29 @@
+<snippet>
+  <content><![CDATA[
+<h4>Language Arts STAR by District</h4>
+<form>
+    <select id="link" onchange="go()">
+        <option>-- Select One --</option>
+        <option value="{% url index %}">Home</option>
+        <option value="{% url district-lang-all %}">All Students by District</option>
+        <option value="{% url district-lang-asian %}">Asian Students by District</option>
+        <option value="{% url district-lang-african-american %}">Black Students by District</option>
+        <option value="{% url district-lang-hispanic %}">Hispanic Students by District</option>
+        <option value="{% url district-lang-white %}">White Students by District</option>
+        <option value="{% url district-lang-english_only %}">English Only by District</option>
+        <option value="{% url district-lang-english_learner %}">English Learner by District</option>
+        <option value="{% url district-lang-economically-disadvantaged %}">Economically Disadvantaged by District</option>
+        <option value="{% url district-lang-not-economically-disadvantaged %}">Not Economically Disadvantaged by District</option>
+    </select>
+</form>
+
+<script type="text/javascript">
+    function go() {
+        window.location=document.getElementById('link').value
+    }
+</script>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>35}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>34}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Option Menu Change Window</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

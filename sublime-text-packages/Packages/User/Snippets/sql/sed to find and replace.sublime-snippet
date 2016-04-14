@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+sed 's/*/NULL/g' statewide_all_students_2013.csv > statewide_all_students_2013_replace.csv
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>20}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>sed to find and replace</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

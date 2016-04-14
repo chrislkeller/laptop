@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<a href="${1}" target="blank"></a>
+]]></content>
+  <tabTrigger>lk</tabTrigger>
+  <description>anchor tag</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

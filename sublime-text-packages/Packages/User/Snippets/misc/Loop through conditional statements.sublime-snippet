@@ -1,0 +1,15 @@
+<snippet>
+  <content><![CDATA[
+for(test in ${1} if (testArray[test].fireTitle === 'Outside Fire' && document.getElementById('Outside_Fire').checked === true) {
+        test_container += '<p>' + testArray[test].fireTitle + '</p>';
+    } else if (testArray[test].fireTitle === 'Outside Fire' && document.getElementById('Outside_Fire').checked === false) {
+        test_container += '<p>Nothing</p>';
+    }
+    mapNoConflict('#content').html(test_container);
+}
+
+]]></content>
+  <tabTrigger>loopconditional</tabTrigger>
+  <description>Loop through conditional statements</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

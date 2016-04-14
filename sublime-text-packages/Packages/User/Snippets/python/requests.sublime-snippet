@@ -1,0 +1,64 @@
+<snippet>
+	<content><![CDATA[
+		#!/usr/bin/env python
+
+		import os
+		import logging
+		import requests
+		import time
+		import datetime
+		import calendar
+		import pytz
+		from concurrent.futures import ThreadPoolExecutor
+		from requests_futures.sessions import FuturesSession
+		from pytz import timezone
+		from datetime import tzinfo, date
+		from concurrent import futures
+
+		logging.basicConfig(format='\033[1;36m%(levelname)s:\033[0;37m %(message)s', level=logging.DEBUG)
+
+
+		#now = datetime.now()
+		#twenty_four_hours_ago = now - timedelta(hours=24)
+		#print twenty_four_hours_ago
+		#delta = calendar.timegm(twenty_four_hours_ago.timetuple())
+		#print delta * 1000
+
+		logging.basicConfig(format="\033[1;36m%(levelname)s:\033[0;37m %(message)s", level=logging.DEBUG)
+
+		list_of_urls = [
+			"http://127.0.0.1:5000",
+			"http://127.0.0.1:5000/earthquaketracker/api/v1.0/earthquakes",
+			"http://127.0.0.1:5000/the-geysers-april-1-2014/10591/",
+			"http://127.0.0.1:5000/earthquaketracker/api/v1.0/earthquakes",
+			"http://127.0.0.1:5000/la-habra-april-1-2014/10588/",
+			"http://127.0.0.1:5000/la-habra-april-1-2014/10571/",
+			"http://127.0.0.1:5000/la-habra-march-29-2014/10268/",
+			"http://127.0.0.1:5000/greenfield-march-24-2014/9854/",
+			"http://127.0.0.1:5000",
+		]
+
+		def load_test(list_of_urls):
+			session = FuturesSession(executor=ThreadPoolExecutor(max_workers=2000))
+			loop_length = 50000
+			loop_count = 0
+			while loop_count < loop_length:
+				for url in list_of_urls:
+					test_session = session.get(url)
+					response_code = test_session.result().status_code
+					if response_code == 200:
+						print response_code
+					else:
+						print "%s at %s" % (test_session.result(), loop_count)
+						break
+				loop_count = loop_count + 1
+
+
+		if __name__ == "__main__":
+		    load_test(list_of_urls)
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

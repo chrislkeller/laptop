@@ -1,0 +1,40 @@
+<snippet>
+  <content><![CDATA[
+<form${1}ame" action="" method="post">
+
+<p><label for="first">Text: </label>
+<input type="text" name="first" id="first" /></p>
+
+<p><label for="radio">Radio: </label>
+<input type="radio" name="radio" id="radio_one" value="one">One</p>
+
+<p><label for="checkbox">Checkbox: </label>
+<input type="checkbox" name="checkbox" id="checkbox" value="checked">Check</p>
+
+<p><label for="select">Select: </label>
+<select name="select" id="select">
+<option value="alpha">Alpha</option>
+<option value="beta" selected>Beta</option>
+</select>
+</p>
+
+<p><label for="multiselect">MultiSelect: </label>
+<select name="multiselect" id="multiselect" multiple="multiple" size="2">
+<option value="gamma">Gamma</option>
+<option value="delta">Delta</option>
+<option value="epsilon">Epsilon</option>
+<option value="zeta">Zeta</option>
+</select>
+</p>
+
+<p><label for="textarea">Textarea: </label>
+<textarea name="textarea" id="textarea" rows="5" cols="30">Text</textarea>
+</p>
+
+<p><input type="submit" name="submit" value="submit" /></p>
+</form>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>9}, "content"=>{"CF$UID"=>28}, "keyCombo"=>{"CF$UID"=>0}, "placeholders"=>{"CF$UID"=>30}, "title"=>{"CF$UID"=>27}, "trigger"=>{"CF$UID"=>29}, "version"=>{"CF$UID"=>8}}</tabTrigger>
+  <description>Fully Loaded Form</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

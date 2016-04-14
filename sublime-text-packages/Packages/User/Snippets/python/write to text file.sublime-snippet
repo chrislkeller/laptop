@@ -1,0 +1,15 @@
+<snippet>
+  <content><![CDATA[
+def extract_data_to_html(url_to_scrape):
+    page_scrape = mech.open(url_to_scrape)
+    html_scrape = page_scrape.read()
+    soup_scrape = BeautifulSoup(html_scrape, convertEntities=BeautifulSoup.HTML_ENTITIES)
+    scraped_election_data = open('scraped_election_data.html', 'wb')
+    soup_scrape = str(soup_scrape)
+    scraped_election_data.write(soup_scrape)
+    scraped_election_data.close()
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>38}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>37}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>write to text file</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

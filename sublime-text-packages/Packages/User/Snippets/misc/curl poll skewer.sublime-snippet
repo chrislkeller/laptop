@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+# get “Tamper Data” Firefox plugin
+
+#!/bin/bash
+while [ true ]; do
+    curl --data "option=1226489732707&c=News_Poll&cid=1226489732697&pagename=Foundation%2FNews_Poll%2FsaveResult&site=NewsComAu&jsEnabled=true" http://www.news.com.au/cs/Satellite | grep total-votes
+done
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>17}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>16}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>curl poll skewer</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

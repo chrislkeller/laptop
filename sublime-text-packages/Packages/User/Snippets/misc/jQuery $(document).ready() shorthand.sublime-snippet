@@ -1,0 +1,17 @@
+<snippet>
+  <content><![CDATA[
+var jqueryNoConflict = jQuery;
+
+//begin main function
+jqueryNoConflict(document).ready(function(){
+
+${1}
+
+});
+//end main function
+
+]]></content>
+  <tabTrigger>jquery</tabTrigger>
+  <description>jQuery $(document).ready() shorthand</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

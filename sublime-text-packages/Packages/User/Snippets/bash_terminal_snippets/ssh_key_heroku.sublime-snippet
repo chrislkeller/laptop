@@ -1,0 +1,26 @@
+<snippet>
+  <content><![CDATA[
+I had the same problem, I followed this post and others of the same kind without success :-((
+
+At the end, I found the solution: I had to add my new rsa identity in my machine!
+
+So, first of all I created a new rsa key:
+
+ssh-keygen -t rsa -C "giordano.scalzo[at]gmail.com" -f  ~/.ssh/id_rsa_heroku
+then added to my machine
+
+ssh-add ~/.ssh/id_rsa_heroku
+and, finally, to Heroku
+
+heroku keys:add ~/.ssh/id_rsa_heroku.pub
+After that,
+
+git push heroku master
+worked like a charm!
+
+Hope this helps.
+]]></content>
+  <tabTrigger></tabTrigger>
+  <description>ssh_key_heroku</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

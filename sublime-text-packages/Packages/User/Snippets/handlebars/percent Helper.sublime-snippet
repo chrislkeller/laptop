@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+// function to set decimal to fixed
+function handlebarsSetDecimalToFixed(){
+    Handlebars.registerHelper('fixedPlace', function(context, options) {
+        var out = (context * 100).toFixed(3);
+        return out + '%';
+    });
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>31}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>30}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>percent Helper</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,18 @@
+<snippet>
+  <content><![CDATA[
+    //begin function
+    function retrieveValueFromSelect(){
+
+        $('#school-district').change(function(){
+            var schoolDistrictValue = $('#school-district :selected').val();
+            console.log(schoolDistrictValue);
+
+        });
+
+    };
+    //end function
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>14}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>13}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>retrieveValueFromSelect</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

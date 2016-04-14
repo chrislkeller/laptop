@@ -1,0 +1,102 @@
+<snippet>
+  <content><![CDATA[
+from django.core.management.base import BaseCommand
+from pdincidents.models import Incident
+from mechanize import Browser
+from BeautifulSoup import BeautifulSoup
+import urllib
+import urllib2
+import time, datetime
+from django.utils.encoding import smart_str, smart_unicode
+
+class Command(BaseCommand):
+    help = 'Scrapes Madison Police Department Data'
+
+    def handle(self, *args, **options):
+        print ('\nStarting scrape at %s\n' % str(datetime.datetime.now()))
+
+        mech = Browser()
+        url = "http://www.cityofmadison.com/incidentReports/incidentList.cfm?a=71&page=1"
+        page = mech.open(url)
+        html = page.read()
+        soup = BeautifulSoup(html)
+
+        # set some varibles to make life easier
+        incidentPrefix = 'http://www.cityofmadison.com/incidentReports/'
+        addressSuffix = ', Madison, Wis.'
+
+        # find table by id
+        crimes = soup.find('table', {'id': 'list'})
+
+        # find all the rows
+        rows = crimes.findAll('tr')[1:]
+
+        for row in rows:
+            col = row.findAll('td')
+            releaseDate = col[0].string
+            incidentType = col[1].text
+            incidentLink = incidentPrefix + col[1].a['href']
+            incidentCase = col[2].text
+            incidentAddress  = col[3].text + addressSuffix
+
+            try:
+                obj = Incident.objects.get(incidentCase=incidentCase)
+                obj.incidentReleaseDate = releaseDate
+                obj.incidentType = incidentType
+                obj.incidentLink = incidentLink
+                obj.incidentCase = incidentCase
+                obj.incidentAddress  = incidentAddress
+                obj.save()
+            except Incident.DoesNotExist:
+                obj = Incident(incidentReleaseDate=releaseDate, incidentType=incidentType, incidentLink=incidentLink, incidentCase=incidentCase, incidentAddress=incidentAddress)
+                obj.save()
+
+
+            # open the incident report URL
+            # and return the contents
+            mech = Browser()
+            urlContent = incidentLink
+            pageContent = mech.open(urlContent)
+            htmlContent = pageContent.read()
+            soupContent = BeautifulSoup(htmlContent)
+
+            # hits incident detail table and returns the contents
+            table = soupContent.find('table', {'id': 'incidentdetail'})
+
+            # finds the tbody that contains the data
+            body = table.find('tbody')
+
+            # find all of the rows in the table
+            rows = body.findAll('tr')
+
+            # determine how many rows in the table
+            contentRows = len(rows)
+
+            # set the count
+            count = 0
+
+            # create an empty list
+            models = {}
+
+            # begin loop
+            while count < contentRows:
+                for row in rows:
+
+                    # create pairs
+                    label = row.find('th').text.encode('utf-8')
+                    narrative = row.find('td').text.encode('utf-8')
+
+                    # append to list
+                    incidentData = label, narrative
+                    models[label] = narrative
+
+                    # iterate through
+                    count = count + 1
+
+                # show me the list
+                print models
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>23}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>22}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>PD Scraper</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

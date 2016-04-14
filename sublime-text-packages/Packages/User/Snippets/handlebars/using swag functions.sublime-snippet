@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+<p>{{lowercase "BENDER SHOULD NOT BE ALLOWED ON TV"}}</p>
+<p>{{uppercase "bender should not be allowed on tv"}}</p>
+<p>{{capitalizeFirst "bender should not be allowed on TV"}}</p>
+<p>{{title}}</p>
+<p>{{multiply number 10}}</p>
+<p>{{toFixed value 2}}</p>
+<p>{{addCommas value 2}}</p>
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>using swag functions</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

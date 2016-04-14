@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+pcregrep --color='auto' -n '[^\x00-\x7F]' state_vaccine_kindergarten_2013_2014.csv
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>grep</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

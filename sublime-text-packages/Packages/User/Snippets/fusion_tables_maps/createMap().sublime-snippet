@@ -1,0 +1,60 @@
+<snippet>
+  <content><![CDATA[
+    // begin function
+    function createMap() {
+
+        // add encrypted table id
+
+        var locationColumn = 'geometry';
+        var centerCalif = new google.maps.LatLng(37.335194502529724, -119.366455078125);
+
+        var map = new google.maps.Map(document.getElementById('map_canvas'), {
+            center: centerCalif,
+            zoom: 6,
+            scrollwheel: false,
+            draggable: false,
+            mapTypeControl: false,
+            navigationControl: true,
+            streetViewControl: false,
+            panControl: false,
+            scaleControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            navigationControlOptions: {
+                style: google.maps.NavigationControlStyle.SMALL,
+                position: google.maps.ControlPosition.RIGHT_TOP}
+        });
+
+        // Initialize ft layer
+
+/*
+        layer = new google.maps.FusionTablesLayer({
+            query: {
+                select: locationColumn,
+                from: tableDiabetes
+            },
+            map: map,
+            suppressInfoWindows: true
+        });
+
+*/
+        google.maps.event.addDomListener(map, 'idle', function() {
+          calculateCenter();
+        });
+
+        google.maps.event.addDomListener(window, 'resize', function() {
+          map.setCenter(centerCalif);
+        });
+
+    };
+    // end function
+
+
+    // function to maintain center point of map
+    function calculateCenter() {
+        center = map.getCenter();
+    };
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>29}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>28}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>createMap()</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

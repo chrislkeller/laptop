@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+if (value!='null',cell.cross("Merge Test B", "HESA code").cells["Average Teaching Score"].value[0],'')
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>36}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>35}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>refine_merge_columns</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

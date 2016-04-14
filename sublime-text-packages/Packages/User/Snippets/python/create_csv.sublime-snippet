@@ -1,0 +1,16 @@
+<snippet>
+  <content><![CDATA[
+def construct_csv_file():
+    with open('test.csv', 'wb+', buffering=0) as newCsvFile:
+        header_row = [
+            'name',
+        ]
+        dataForCsv = csv.writer(newCsvFile, delimiter=',', quoting=csv.QUOTE_ALL)
+        dataForCsv.writerow(header_row)
+        newCsvFile.close()
+
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>83}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>82}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>create_csv</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

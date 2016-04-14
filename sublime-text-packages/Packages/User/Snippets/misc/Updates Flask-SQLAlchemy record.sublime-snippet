@@ -1,0 +1,31 @@
+<snippet>
+  <content><![CDATA[
+class TestUpdates(Command):
+    "mimics django's get or create function"
+    def run(self):
+        comparison_slug = 'what-slug'
+        comparison_name = 'new name'
+        instance = Experiment.query.filter_by(slug=comparison_slug).first()
+        if instance is None:
+            logging.debug('record doesnt exist')
+            thisRecord = Experiment(
+                id = None,
+                slug = comparison_slug,
+                name = comparison_name,
+                date_time = datetime.datetime.utcfromtimestamp(1386439823060/1e3)
+            )
+            db.session.add(thisRecord)
+        else:
+            logging.debug('record exists so im comparing')
+            if instance.name == comparison_name:
+                logging.debug('record exists and doesnt need to be updated')
+                pass
+            else:
+                logging.debug('record exists and will be updated')
+                instance.name = 'new name'
+        db.session.commit()
+]]></content>
+  <tabTrigger>{"$classes"=>["NSMutableArray", "NSArray", "NSObject"], "$classname"=>"NSMutableArray"}</tabTrigger>
+  <description>Updates Flask-SQLAlchemy record</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+convert pictur${1}ng
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>47}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>46}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>convert image</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

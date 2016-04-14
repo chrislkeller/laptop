@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+// function to set decimal to fixed
+function handlebarsEncodeUrl(){
+    Handlebars.registerHelper('encode', function(context, options) {
+        var out = encodeURIComponent(context);
+        return out;
+    });
+};
+]]></content>
+  <tabTrigger>{"$classes"=>["NSMutableArray", "NSArray", "NSObject"], "$classname"=>"NSMutableArray"}</tabTrigger>
+  <description>Handlebars Encode URL</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

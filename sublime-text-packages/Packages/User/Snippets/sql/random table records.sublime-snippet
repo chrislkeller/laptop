@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+SELECT * FROM `TABLE` ORDER BY RAND() LIMIT 5
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>14}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>13}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>random table records</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

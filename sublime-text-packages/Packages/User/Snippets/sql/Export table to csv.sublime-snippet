@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+            COPY
+                five_county_district_results_2013
+            TO
+                '/Users/ckeller/Desktop/five_county_district_results_2013.csv'
+            DELIMITER
+                ','
+            CSV HEADER;
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>17}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>16}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Export table to csv</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

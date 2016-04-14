@@ -1,0 +1,16 @@
+<snippet>
+  <content><![CDATA[
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-sm-offset-3 col-md-3 col-md-offset-2 col-lg-4 col-lg-offset-1">
+    <img src="https://www.govtrack.us/data/photos/412510-100px.jpeg" width="100%" class="responsive" />
+</div>
+
+<div class="col-xs-6 col-sm-6 col-sm-offset-3 col-md-3 col-md-offset-2 col-lg-4 col-lg-offset-2">
+    <img src="https://www.govtrack.us/data/photos/412510-100px.jpeg" width="100%" class="responsive" />
+</div>
+</div>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>23}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>22}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>bootstrap rows</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

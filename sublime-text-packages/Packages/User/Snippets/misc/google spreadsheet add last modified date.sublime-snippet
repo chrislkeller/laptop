@@ -1,0 +1,20 @@
+<snippet>
+  <content><![CDATA[
+function onEdit() {
+    var s = SpreadsheetApp.getActiveSheet();
+    var r = s.getActiveCell();
+    
+    // checks the column
+    if( r.getColumn() != 2 ) {
+        var row = r.getRow();
+        var time = new Date();
+        time = Utilities.formatDate(time, "GMT-08:00", "MM/DD/yy, hh:mm:ss");
+        SpreadsheetApp.getActiveSheet().getRange('B' + row.toString()).setValue(time);
+    };
+
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>29}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>28}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>google spreadsheet add last modified date</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

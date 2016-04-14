@@ -1,0 +1,8 @@
+<snippet>
+<content><![CDATA[
+logger.debug(${1})
+]]></content>
+<tabTrigger>log</tabTrigger>
+<description>logging_debug</description>
+<!-- <scope>[add here]</scope> -->
+</snippet>

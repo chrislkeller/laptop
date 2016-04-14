@@ -1,0 +1,24 @@
+<snippet>
+  <content><![CDATA[
+// begin function
+function buildArrayFrom(obj){
+
+    console.log(obj);
+
+    var arr = [];
+
+
+    for (var key in obj){
+        arr.push(key + ': ' + obj[key]);
+    };
+
+    //var result = arr.join(',');
+
+    console.log(arr);
+
+}
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>buildArrayFrom</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

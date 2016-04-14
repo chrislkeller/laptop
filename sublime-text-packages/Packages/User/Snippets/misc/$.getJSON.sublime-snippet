@@ -1,0 +1,11 @@
+<snippet>
+  <content><![CDATA[
+//begin json${1}N('<URL>', function(data) {
+
+});
+//end json query
+]]></content>
+  <tabTrigger>json</tabTrigger>
+  <description>$.getJSON</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

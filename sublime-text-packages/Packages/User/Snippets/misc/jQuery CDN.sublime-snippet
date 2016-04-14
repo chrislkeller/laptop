@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7/jquery.min.js">${1}
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>18}, "keyCombo"=>{"CF$UID"=>0}, "placeholders"=>{"CF$UID"=>20}, "title"=>{"CF$UID"=>17}, "trigger"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>jQuery CDN</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

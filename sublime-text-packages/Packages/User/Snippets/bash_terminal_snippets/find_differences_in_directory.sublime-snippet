@@ -1,0 +1,10 @@
+<snippet>
+  <content><![CDATA[
+diff --brief -r ${1:~/} ${2:~/}
+]]></content>
+  <tabTrigger>diffs</tabTrigger>
+  <description>Find file differences in directory</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>
+
+

@@ -1,0 +1,130 @@
+<snippet>
+  <content><![CDATA[
+{% extends "base.html" %}
+
+{% block title %} Latest Madison Police Incidents {% endblock %}
+
+{% block content %}
+
+{% block page-header %}
+	<div class="page-headers">
+		<h2>Latest Madison Police Incidents</h2>
+	</div>
+{% endblock page-header %}
+
+{% if incident_listing %}
+
+<!-- begin map script -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+		writeMap();
+	});
+
+	function writeMap() {
+
+        {% load l10n %}
+
+
+		var myOptions = {
+			zoom: 11,
+			center: new google.maps.LatLng(43.0730517, -89.4012302),
+            scrollwheel: false,
+            draggable: true,
+            mapTypeControl: false,
+            navigationControl: true,
+            streetViewControl: false,
+            panControl: false,
+            scaleControl: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            navigationControlOptions: {
+                style: google.maps.NavigationControlStyle.SMALL,
+                position: google.maps.ControlPosition.RIGHT_TOP}
+            };
+		
+		var map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+
+        {% localize off %}
+        
+
+        {% for addr in addresses %}
+        var latlng = new google.maps.LatLng({{ addr.latitude }}, {{ addr.longitude }});
+
+		var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: '{{ addr.address }}'
+		});
+		
+		{% endfor %}
+
+
+/*
+		
+		var info = new google.maps.InfoWindow({
+			content: 'Center of Madison'
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			console.log('clicked');
+			info.open(map, marker);
+		});
+
+*/
+
+
+
+
+		{% endlocalize %}
+
+	}
+</script> 
+ <!-- end map script -->
+
+
+	<!-- write map -->
+	<div id="map-display">	
+		<div id="map_canvas" style="width: 700px; height: 400px; margin: 0 auto 0 auto;"></div>
+	</div>
+	<!-- end map -->
+
+
+{% block exports %}{% endblock exports %}
+	
+	<!-- begin table -->	
+	<table id="incident-table" class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Incident</th>
+				<th>Location</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+
+{% for incident in incident_listing %}
+
+			<tr>
+				<td>{{ incident.dateDetails }} </td>
+				<td>{{ incident.typeDetails }}</td>
+				<td>{{ incident.addressDetails }}</td>
+				<td><a class="centered btn btn-large btn-primary" href="/incidents/{{ incident.id }}">View</a></td>
+			</tr>
+
+{% endfor %}
+
+			</tbody>
+	</table>
+	<!-- end table -->
+
+{% else %}
+	<p>No incidents to report.</p>
+{% endif %}
+
+{% endblock content %}
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>29}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>28}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>TABLE.HTML</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

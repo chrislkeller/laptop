@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+http://www.scpr.org/assets/logo-mark-sm.png
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>9}, "content"=>{"CF$UID"=>18}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>17}, "version"=>{"CF$UID"=>8}}</tabTrigger>
+  <description>orange donut</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

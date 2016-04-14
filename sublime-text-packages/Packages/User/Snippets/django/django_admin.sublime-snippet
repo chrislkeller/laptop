@@ -1,0 +1,35 @@
+<snippet>
+  <content><![CDATA[
+from pdincidents.models import Incident, IncidentDetail
+from django.contrib import admin
+
+class IncidentAdmin(admin.ModelAdmin):
+
+	list_display = ('incidentDate', 'incidentType', 'incidentAddress')
+
+    	fieldsets = [
+        	('Date', {'fields': ['incidentDate']}),
+        	('Type', {'fields': ['incidentType']}),
+        	('Link to Incident', {'fields': ['incidentLink']}),
+        	('Location', {'fields': ['incidentAddress']}),
+        	('Case Number', {'fields': ['incidentCase']}),
+		]
+
+	list_filter = ['incidentDate', 'incidentType', 'incidentAddress']
+	search_fields = ['incidentType']
+
+class IncidentDetailAdmin(admin.ModelAdmin):
+
+	list_display = ('incidentSuspect')
+
+        fieldsets = [
+            ('Suspect', {'fields': ['incidentSuspect']}),
+        ]
+
+admin.site.register(Incident, IncidentAdmin)
+admin.site.register(IncidentDetail, IncidentDetailAdmin)
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>20}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Django Admin</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

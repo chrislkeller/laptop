@@ -1,0 +1,25 @@
+<snippet>
+	<content><![CDATA[
+		SELECT
+			school,
+			students,
+			sd_num,
+			100 * (CAST(sd_num AS decimal)) / (CAST(students AS decimal)) AS "percentage_disadvantaged"
+		FROM
+			cleaned_api13
+		WHERE
+			type='S'
+		AND
+			district='Los Angeles Unified'
+		AND
+			is_charter = 'f'
+		AND
+			100 * (CAST(sd_num AS decimal)) / (CAST(students AS decimal)) < 20
+		ORDER BY
+			4 DESC;
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

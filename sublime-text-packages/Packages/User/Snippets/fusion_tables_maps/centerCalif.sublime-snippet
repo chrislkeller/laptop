@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+var centerCalif = new google.maps.LatLng(33.986608054508494, -118.16070556640625);
+]]></content>
+  <tabTrigger>centerCalif</tabTrigger>
+  <description>centerCalif</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

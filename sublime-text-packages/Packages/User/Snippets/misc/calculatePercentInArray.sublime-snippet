@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+    function calculatePercent(arrayOne, arrayTwo){
+        var arrayOne = [10, 25, 35];
+        var arrayTwo = [35, 87, 90];
+
+        var totalFigureOne = arrayOne[0]/(arrayOne[0] + arrayTwo[0]);
+        var totalFigureTwo = 1 - totalFigureOne;
+
+
+        //var totalFigureOne = arrayOne[0]/(arrayOne[0] + arrayTwo[0]);
+        //var totalFigureTwo = arrayTwo[0]/(arrayOne[0] + arrayTwo[0]);
+
+        return 
+    }
+
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>20}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>calculatePercentInArray</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

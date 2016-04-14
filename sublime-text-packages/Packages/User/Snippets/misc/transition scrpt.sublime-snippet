@@ -1,0 +1,49 @@
+<snippet>
+  <content><![CDATA[
+<div class="row-fluid">
+    <div class="span9 offset2">
+        <div id="transition-controls">
+            <div class="span3">
+                <a id="farm-to-walmart" href="javascript:void(0)"><img src="http://a.scpr.org/i/a46823aa3ad2d83a33ef28a539a2ea4a/51075-wide.jpg" alt="Walmart" /></a>
+            </div>
+            <div class="span3">
+                <a id="farm-to-farmers-market" href="javascript:void(0)"><img src="http://a.scpr.org/i/032764af4d15269ed6c1826c05ae7907/45814-wide.jpg" alt="Farmer's Market" /></a>
+            </div>
+            <div class="span3">
+                <a id="farm-to-farmers-market" href="javascript:void(0)"><img src="http://a.scpr.org/i/032764af4d15269ed6c1826c05ae7907/45814-wide.jpg" alt="Farmer's Market" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+var jqueryNoConflict = jQuery;
+var fn = fn || {};
+
+// begin main function
+jqueryNoConflict(document).ready(function() {
+    fn.getIdOfClick();
+});
+
+// begin data configuration object
+var fn = {
+
+    // get the id of a bill container on click
+    getIdOfClick: function(data){
+        jqueryNoConflict('#transition-controls a').click(function(){
+            var targetNarrative = jqueryNoConflict(this).attr('id');
+
+            console.log(targetNarrative);
+
+            jqueryNoConflict('div.active').fadeOut().removeClass('active').addClass('hidden');
+            jqueryNoConflict('div#' + targetNarrative).fadeIn().removeClass('hidden').addClass('active');
+        });
+    }
+
+};
+// end data configuration object
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>26}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>25}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>transition scrpt</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

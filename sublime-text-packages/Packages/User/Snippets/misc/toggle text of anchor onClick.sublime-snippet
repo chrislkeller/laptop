@@ -1,0 +1,19 @@
+<snippet>
+  <content><![CDATA[
+// change text of user submit button when clicked
+function alterDisplayDetails(){
+    jqueryNoConflict('#showmodule').addClass('active');
+    jqueryNoConflict('span', '#showmodule').toggle();
+    jqueryNoConflict('#module').slideToggle();
+};
+// end
+
+<a class="btn btn-success hidden-phone hidden-tablet" id="showmodule" href="#" onclick="userSubmit();">
+    <span>Submit an issue</span>
+    <span style="display : none;">Hide Submission Form</span>
+</a>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>29}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>28}, "trigger"=>{"CF$UID"=>30}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>toggle text of anchor onClick</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+sed 1d *.csv > 2011_12_calif_cohort_total_outcome.csv
+]]></content>
+  <tabTrigger>{"$classes"=>["NSMutableArray", "NSArray", "NSObject"], "$classname"=>"NSMutableArray"}</tabTrigger>
+  <description>combine csv files</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

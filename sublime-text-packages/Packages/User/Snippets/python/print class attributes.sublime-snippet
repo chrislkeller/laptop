@@ -1,0 +1,17 @@
+<snippet>
+  <content><![CDATA[
+an = Animal()
+attrs = vars(an)
+# {'kids': 0, 'name': 'Dog', 'color': 'Spotted', 'age': 10, 'legs': 2, 'smell': 'Alot'}
+# now dump this in some way or another
+print ', '.join("%s: %s" % item for item in attrs.items())
+
+
+    attributes = vars(class_instance)
+    logging.debug(attributes)
+
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>86}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>85}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>print class attributes</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

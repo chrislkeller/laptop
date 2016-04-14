@@ -1,0 +1,30 @@
+<snippet>
+  <content><![CDATA[
+<!-- begin select menu -->
+<div class="incident-content">
+    <div class="control-group">
+    <label class="control-label" for="incident-type">Filter by incident type</label>
+    <div class="controls">
+        <select name="testing" id="incident-type">
+            <option>-- Select --</option>
+
+{% for incident in incident_listing %}
+
+    {% filter lower %}
+    <option value="http://127.0.0.1:8000/incidents/test/{{ incident.typeDetails }}">
+    {% endfilter %}
+    
+    {{ incident.typeDetails }}</option>
+
+{% endfor %}
+
+        </select>
+    </div>
+    </div>
+</div>
+<!-- end select menu -->
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>32}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>31}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Dynamic DropDown Menu</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

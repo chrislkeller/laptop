@@ -1,0 +1,12 @@
+<snippet>
+  <content><![CDATA[
+function scr${1}r x = $(this).offset().top - 100; // 100 provides buffer in viewport
+   $('html,body').animate({scrollTop: x}, 500);
+}
+// set focus event on element
+$('#myForm :input').focus(scrollGo); 
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>34}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>33}, "trigger"=>{"CF$UID"=>35}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>scroll to element with jQuery</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

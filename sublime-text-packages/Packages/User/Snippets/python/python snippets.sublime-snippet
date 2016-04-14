@@ -1,0 +1,240 @@
+<snippet>
+  <content><![CDATA[
+# pretty json display
+echo '{"foo": "lorem", "bar": "ipsum"}' | python -mjson.tool
+
+# print strings
+a = 'This'
+b = 'an answer'
+print '%s can\'t be %s' % (a, b)
+
+# swapping variables
+x = 6
+y = 5
+x, y = y, x
+
+print x
+    >>> 5
+print y
+    >>> 6
+
+# inline if statement
+print "Hello" if True else "World"
+    >>> Hello
+
+# concatenation
+nfc = ["Packers", "49ers"]
+afc = ["Ravens", "Patriots"]
+print nfc + afc
+    >>> ['Packers', '49ers', 'Ravens', 'Patriots']
+
+# concatenation
+print str(1) + " world"
+    >>> 1 world
+
+# concatenation
+print `1` + " world"
+    >>> 1 world
+
+# concatenation
+print 1, "world"
+    >>> 1 world
+
+# concatenation
+print nfc, 1
+    >>> ['Packers', '49ers'] 1
+
+# rounds down
+print 5.0//2
+    >>> 2
+
+# 2 raised to the 5th power
+print 2**5
+    >> 32
+
+# be careful with division and floating point numbers
+print .3/.1
+    >>> 2.9999999999999996
+
+# be careful with division and floating point numbers
+print .3//.1
+    >>> 2.0
+
+# iterate through two lists at the same time
+nfc = ["Packers", "49ers"]
+afc = ["Ravens", "Patriots"]
+for teama, teamb in zip(nfc, afc):
+    print teama + " vs. " + teamb
+
+    >>> Packers vs. Ravens
+    >>> 49ers vs. Patriots
+
+# iterate through list with an index
+teams = ["Packers", "49ers", "Ravens", "Patriots"]
+for index, team in enumerate(teams):
+    print index, team
+
+    >>> 0 Packers
+    >>> 1 49ers
+    >>> 2 Ravens
+    >>> 3 Patriots
+
+# list comprehensions
+'''
+With a list comprehension we can turn this:
+'''
+numbers = [1,2,3,4,5,6]
+even = []
+for number in numbers:
+    if number%2 == 0:
+        even.append(number)
+
+'''
+Into this:
+'''
+numbers = [1,2,3,4,5,6]
+even = [number for number in numbers if number%2 == 0]
+
+# dictionary comprehension
+teams = ["Packers", "49ers", "Ravens", "Patriots"]
+print {key: value for value, key in enumerate(teams)}
+    >>> {'49ers': 1, 'Ravens': 2, 'Patriots': 3, 'Packers': 0}
+
+# initialize list values
+items = [0]*3
+print items
+    >>> [0,0,0]
+
+# converting a list to a string
+teams = ["Packers", "49ers", "Ravens", "Patriots"]
+print ", ".join(teams)
+    >>> 'Packers, 49ers, Ravens, Patriots'
+
+
+# get item from dictionary
+'''
+I'll admit that try/except code doesn't look the prettiest.
+Here's a simple way to fix that with dictionaries.
+This will try to find the key in the dictionary 
+and if it can't be found it will set the variable to the second parameter.
+'''
+
+# instead of:
+data = {'user': 1, 'name': 'Max', 'three': 4}
+try:
+    is_admin = data['admin']
+except KeyError:
+    is_admin = False
+
+# do this:
+data = {'user': 1, 'name': 'Max', 'three': 4}
+is_admin = data.get('admin', False)
+
+# convert list to a tuple
+listData = ['one', 'two', 'three']
+print '%s (%s)' % (listData, type(listData))
+    >>> ['one', 'two', 'three'] (<type 'list'>)
+
+tupleData = tuple(listData)
+print '%s (%s)' % (tupleData, type(tupleData))
+    >>> ('one', 'two', 'three') (<type 'tuple'>)
+
+# remove whitespace & push to list
+if ' ' in key:
+    edited_key = key.replace(" ", "").lower()
+    fieldnames.append(edited_key)
+
+# taking a subset of a list
+'''
+Sometimes you only want to run code over a portion of a list.
+Here are a few ways you can get the subset of a list.
+'''
+
+x = [1,2,3,4,5,6]
+
+# first 3 
+print x[:3]
+    >>> [1,2,3]
+
+# middle 4
+print x[1:5]
+    >>> [2,3,4,5]
+
+# last 3
+print x[-3:]
+    >>> [4,5,6]
+
+# odd numbers
+print x[::2]
+    >>> [1,3,5]
+
+# even numbers
+print x[1::2]
+    >>> [2,4,6]
+
+# fizzBuzz in 60 Characters
+'''
+A while back Jeff Atwood popularized a simple programming exercise called FizzBuzz.
+Here is the excerpt on the problem:
+Write a program that prints the numbers from 1 to 100.
+But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".
+For numbers which are multiples of both three and five print "FizzBuzz".
+Here's a short, fun way to solve the problem.
+'''
+
+for x in range(1,101):print"Fizz"[x%3*4:]+"Buzz"[x%5*4:]or x
+
+# collections
+'''
+In addition to python's built in datatypes they also include a few extra 
+for special use cases in the collections module. 
+I find the Counter to be quite useful on occasion.
+'''
+
+from collections import Counter
+print Counter("hello")
+    >>> Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})
+
+# itertools
+'''
+Along with the collections library 
+python also has a library called itertools
+which has really cool efficient solutions to problems.
+One is finding all combinations. 
+This will tell us all the different ways
+the teams can play each other.
+'''
+
+from itertools import combinations
+
+teams = ["Packers", "49ers", "Ravens", "Patriots"]
+for game in combinations(teams, 2):
+    print game
+
+    >>> ('Packers', '49ers')
+    >>> ('Packers', 'Ravens')
+    >>> ('Packers', 'Patriots')
+    >>> ('49ers', 'Ravens')
+    >>> ('49ers', 'Patriots')
+    >>> ('Ravens', 'Patriots')
+
+# False == True
+'''
+This is more of a fun one 
+than a useful technique.
+In python True and False 
+are basically just global variables.
+Thus:
+'''
+
+False = True
+if False:
+    print "Hello"
+else:
+    print "World"
+    >>> Hello
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>35}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>34}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>python snippets</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

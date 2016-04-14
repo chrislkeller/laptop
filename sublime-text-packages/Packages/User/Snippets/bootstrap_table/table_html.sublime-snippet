@@ -1,0 +1,25 @@
+<snippet>
+  <content><![CDATA[
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>table-circle-index.html</td>
+            <td>1/23/13</td>
+        </tr>
+        <tr>
+            <td>table-circle-index.html</td>
+            <td>1/23/13</td>
+        </tr>
+    </tbody>
+</table>
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>[Table]</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

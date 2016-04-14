@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+def determine_frequency_in(list_of_dicts):
+    r = defaultdict(counters)
+    for d in list_of_dicts:
+        for k, v in d.items():
+            r[k][v] += 1
+    return dict((k, dict(v)) for k, v in r.items())
+]]></content>
+  <tabTrigger>{"$classes"=>["ClipGroup", "NSObject"], "$classname"=>"ClipGroup"}</tabTrigger>
+  <description>get frequency from list of dicts</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

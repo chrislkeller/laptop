@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+var objectLength = Object.keys(objectToConvert).length;
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>14}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>13}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Object.keys(objectToConvert).length</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

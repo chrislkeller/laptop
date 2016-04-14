@@ -1,0 +1,29 @@
+<snippet>
+  <content><![CDATA[
+// function to evaluate topic and assign icon image
+function determineIconToUse(element_to_evaluate){
+    var icon;
+    if (element_to_evaluate == 'Crime'){
+        icon = 'static-files/images/crime.png';
+    } else if (element_to_evaluate == 'Public health'){
+        icon = 'static-files/images/health.png';
+    } else if (element_to_evaluate == 'Taxes'){
+        icon = 'static-files/images/taxes.png';
+    } else if (element_to_evaluate == 'Environment'){
+        icon = 'static-files/images/environment.png';
+    } else if (element_to_evaluate == 'Education'){
+        icon = 'static-files/images/education.png';
+    } else if (element_to_evaluate == 'Transportation'){
+        icon = 'static-files/images/transportation.png';
+    } else if (element_to_evaluate == 'Politics'){
+        icon = 'static-files/images/politics.png';
+    } else {
+        icon = 'static-files/images/other.png';
+    }
+    return icon;
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>17}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>16}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>if statement to return value</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

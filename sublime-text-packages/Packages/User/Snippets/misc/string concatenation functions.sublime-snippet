@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+function createHref(url, txt) {
+  return '<p><a href=\"' + url + '\">' + txt + '</a></p>'
+};
+
+function createGraf(txt) {
+  return '<p>' + txt + '</p>'
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>20}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>string concatenation functions</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

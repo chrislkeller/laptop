@@ -1,0 +1,30 @@
+<snippet>
+  <content><![CDATA[
+# import libraries
+import csv
+import time, datetime
+from dateutil import parser
+
+# data to write to csv file
+data = ['this', 'will', 'be', 'written']
+
+# print begin status
+print ('Started writing data to csv at %s' % datetime.datetime.now().strftime('%b %d, %Y at %I:%M %p'))
+
+# opens csv file to write headers
+with open('your_new_file.txt.csv', 'wb', buffering=0) as newCsvFile:
+    dataForCsv = csv.writer(newCsvFile, delimiter=',', quoting=csv.QUOTE_ALL)
+
+    # writes data to a row
+    dataForCsv.writerow(data)
+
+    # closes csv file
+    newCsvFile.close()
+
+# print end status
+print ('Completed writing data to csv at %s' % datetime.datetime.now().strftime('%b %d, %Y at %I:%M %p'))
+]]></content>
+  <tabTrigger>csvfilescrape</tabTrigger>
+  <description>data to csv file</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

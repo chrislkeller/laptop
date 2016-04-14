@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+var centerLosAngeles = new google.maps.LatLng(34.061841979429445, -118.26370239257812);
+]]></content>
+  <tabTrigger>centerla</tabTrigger>
+  <description>centerLA</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

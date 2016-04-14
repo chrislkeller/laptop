@@ -1,0 +1,50 @@
+<snippet>
+  <content><![CDATA[
+// handlebars help function to set every nth element
+function handlebarsLoopHelper(){
+    Handlebars.registerHelper('everyNth', function(context, every, options) {
+        var fn = options.fn, inverse = options.inverse;
+        var ret = "";
+        if(context && context.length > 0) {
+            for(var i=0, j=context.length; i<j; i++) {
+                var modZero = i % every === 0;
+                ret = ret + fn(_.extend({}, context[i], {
+                    isModZero: modZero,
+                    isModZeroNotFirst: modZero && i > 0,
+                    isLast: i === context.length - 1
+                }));
+            }
+
+        } else {
+            ret = inverse(this);
+        }
+
+    return ret;
+
+    });
+};
+// end
+
+{{#everyNth objects 4}}
+    {{#if isModZeroNotFirst}}
+        </div>
+    {{/if}}
+
+    {{#if isModZero}}
+        <div class="row-fluid">
+    {{/if}}
+
+    <div class="span3">
+        <li>{{Contributor_First_Name}} {{Contributor_Last_Name}}</li>
+    </div>
+
+    {{#if isLast}}
+        </div>
+    {{/if}}
+{{/everyNth}}
+
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>28}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>27}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>handlebarsLoopHelper</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+([0-9]{3})\D*([0-9]{3})\D*([0-9]{4})
+]]></content>
+  <tabTrigger>{"$classes"=>["NSMutableArray", "NSArray", "NSObject"], "$classname"=>"NSMutableArray"}</tabTrigger>
+  <description>Phone Number RegEx</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

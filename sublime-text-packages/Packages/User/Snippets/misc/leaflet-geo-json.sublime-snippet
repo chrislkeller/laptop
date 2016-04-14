@@ -1,0 +1,38 @@
+<snippet>
+  <content><![CDATA[
+    <script type="text/javascript">
+        map = new L.map('map-canvas', {
+            scrollWheelZoom: false,
+            zoomControl:false
+        });
+
+        var center = new L.LatLng(32.899191,-116.795869);
+        map.setView(center, 5);
+        map.dragging.disable();
+
+        googleLayer = L.tileLayer("http://{s}.google.com/vt/?hl=en&x={x}&y={y}&z={z}&s={s}", {
+            attribution: "Map data: Copyright Google, 2013",
+            subdomains: ['mt0','mt1','mt2','mt3']
+        });
+
+        map.addLayer(googleLayer);
+
+        //var myLayer = L.geoJson().addTo(map);
+
+        L.geoJson(mcnallyFireJson, {
+            style: function (feature) {
+                return {
+                    color: 'black',
+                    weight: 5,
+                    fillColor: 'black',
+                    opacity: 0.5,
+                    fillOpacity: 0.5
+                }
+            },
+        }).addTo(map);
+    </script>
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>20}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>19}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>leaflet-geo-json</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

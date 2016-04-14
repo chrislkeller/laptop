@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+=A1 & " " & B1 & " " & Text(C1,"00000")
+]]></content>
+  <tabTrigger>2</tabTrigger>
+  <description>combine with zip code</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

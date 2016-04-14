@@ -1,0 +1,14 @@
+<snippet>
+  <content><![CDATA[
+entity_type_ho${1}nd(entity.type)
+entity_value_holding_list.append(entity.value)
+
+entity_tuple = collections.namedtuple('entity_data', ['x', 'y'])
+et = entity_tuple(x=entity_type_holding_list, y=entity_value_holding_list)
+
+list_length(et.x)
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>14}, "content"=>{"CF$UID"=>41}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>40}, "version"=>{"CF$UID"=>13}}</tabTrigger>
+  <description>two lists to a tuple</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

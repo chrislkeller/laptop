@@ -1,0 +1,51 @@
+<snippet>
+  <content><![CDATA[
+#!/bin/bash
+
+# Nov. 14 Query What we're looking for
+# Vision Quest Ortho Care
+# Alta Healthcare system
+# Vista Healthcare LLC
+# Industrial Pharmacy Management
+# Pacific Hospital of Long Beach
+
+# Search for string of Alta Healthcare in the party file which returns a list of instances
+        #grep -iw "Vision Quest" ewe_web_case_party.txt
+
+#Get the case number and query the case info and body part data
+        #grep -iw "ADJ302011" ewe_web_case_info_1.txt
+        #grep -iw "ADJ302011" ewe_web_body_part.txt
+    declare -a array_of_cases=(
+        ADJ302011
+        ADJ2935163
+        ADJ2976115
+        ADJ3188574
+        ADJ3505894
+        ADJ3637055
+        ADJ3642351
+        ADJ3674230
+        ADJ3696195
+        ADJ4017301
+        ADJ4022382
+        ADJ4653102
+        ADJ4687391
+        ADJ314414
+    )
+
+for i in ${array_of_cases[@]}
+do
+    grep -iw "$i" ewe_web_case_info_1.txt
+    grep -iw "$i" ewe_web_body_part.txt
+    echo -ne '#####                     (33%)\r'
+    sleep 1
+    echo -ne '#############             (66%)\r'
+    sleep 1
+    echo -ne '#######################   (100%)\r'
+    echo -ne '\n'
+    echo '\n'
+done
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>32}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>31}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>bash_loop_through_array</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

@@ -1,0 +1,19 @@
+<snippet>
+  <content><![CDATA[
+#map-data-loading {background: #e9e9e9; width: 100%; height: 20px; margin: 15px 0 15px 0; padding: 0px; text-align: center; display: none;}
+
+.display {color: #e9e9e9;}
+
+//loading screen
+function showLoading() {
+	jqueryNoConflict('#map-data-loading').fadeIn('slow');
+};
+
+function hideLoading() {
+	jqueryNoConflict('#map-data-loading').fadeOut('slow');
+};
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>8}, "content"=>{"CF$UID"=>23}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>22}, "version"=>{"CF$UID"=>7}}</tabTrigger>
+  <description>Loading GIF</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

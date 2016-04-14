@@ -1,0 +1,25 @@
+<snippet>
+  <content><![CDATA[
+// when user submit button is clicked
+function userSubmit(){
+    jqueryNoConflict('#content-article-text').hide();
+    jqueryNoConflict('#content-article-buttons').hide();
+    jqueryNoConflict('#content-display').empty();
+    jqueryNoConflict('#data-user-submit').show();
+    renderHandlebarsTemplate('static-files/templates/data-user-submit.handlebars', '#data-user-submit');
+};
+// end
+
+// return to main view
+function mapIntro(){
+    jqueryNoConflict('#content-article-text').show();
+    jqueryNoConflict('#content-article-buttons').show();
+    jqueryNoConflict('#content-display').empty();
+    jqueryNoConflict('#data-user-submit').hide();
+};
+// end
+]]></content>
+  <tabTrigger>{"$class"=>{"CF$UID"=>9}, "content"=>{"CF$UID"=>21}, "keyCombo"=>{"CF$UID"=>0}, "title"=>{"CF$UID"=>20}, "version"=>{"CF$UID"=>8}}</tabTrigger>
+  <description>show form, hide form</description>
+  <!-- <scope>[add here]</scope> -->
+</snippet>

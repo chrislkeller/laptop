@@ -1,25 +1,35 @@
 #!/bin/sh
 
-# Welcome to the 18F laptop script!
-# Be prepared to turn your laptop (or desktop)
-# into an awesome development machine.
+# script based on the 18F laptop script
+# used to turn your computer into
+# an awesome development machine.
 
+# reusable functions #
+
+# function to print to the terminal
 fancy_echo() {
   local fmt="$1"; shift
-
   # shellcheck disable=SC2059
   printf "\n$fmt\n" "$@"
 }
 
+# function to add to a file
 append_to_file() {
   local file="$1"
   local text="$2"
 
-  if [ "$file" = "$HOME/.zshrc" ]; then
-    if [ -w "$HOME/.zshrc.local" ]; then
-      file="$HOME/.zshrc.local"
+  # if there is a .bashrc
+  if [ "$file" = "$HOME/.bashrc" ]; then
+
+    # if there is a .bashrc.local
+    if [ -w "$HOME/.bashrc.local" ]; then
+
+      # use .bashrc.local
+      file="$HOME/.bashrc.local"
+
+    # otherwise create .bashrc
     else
-      file="$HOME/.zshrc"
+      file="$HOME/.bashrc"
     fi
   fi
 
@@ -28,32 +38,38 @@ append_to_file() {
   fi
 }
 
-# shellcheck disable=SC2154
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-
-set -e
-
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
-fi
-
-# shellcheck disable=SC2016
-append_to_file "$HOME/.zshrc" 'export PATH="$HOME/.bin:$PATH"'
-
-case "$SHELL" in
-  */zsh) : ;;
-  *)
-    fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
-    ;;
-esac
+# function to either install or upgrade a homebrew package
+brew_install_or_upgrade() {
+  if brew_is_installed "$1"; then
+    if brew_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
+      brew upgrade "$@"
+    else
+      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+    fi
+  else
+    fancy_echo "Installing %s ..." "$1"
+    brew install "$@"
+  fi
+}
 
 brew_is_installed() {
   brew list -1 | grep -Fqx "$1"
+}
+
+brew_is_upgradable() {
+  ! brew outdated --quiet "$1" >/dev/null
+}
+
+brew_tap_is_installed() {
+  brew tap | grep -Fqx "$1"
+}
+
+brew_tap() {
+  if ! brew_tap_is_installed "$1"; then
+    fancy_echo "Tapping $1..."
+    brew tap "$1" 2> /dev/null
+  fi
 }
 
 gem_install_or_update() {
@@ -66,160 +82,360 @@ gem_install_or_update() {
   fi
 }
 
+pip_install_or_update() {
+  if pip list "$1" | grep "^$1 ("; then
+    fancy_echo "Updating %s ..." "$1"
+    pip install --upgrade "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    pip install "$@"
+  fi
+}
+
 app_is_installed() {
   local app_name
   app_name=$(echo "$1" | cut -d'-' -f1)
   find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
 }
 
-if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-    curl -fsS \
-      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+_init_home_dir() {
+  # create ~/.bin if it doesn't already exist
+  if [ ! -d "$HOME/.bin/" ]; then
+    mkdir "$HOME/.bin"
+  fi
 
-    # shellcheck disable=SC2016
-    append_to_file "$HOME/.zshrc" 'export PATH="/usr/local/bin:$PATH"'
-else
-  fancy_echo "Homebrew already installed. Skipping ..."
-fi
+  # create ~/.bashrc if it doesn't already exist
+  if [ ! -f "$HOME/.bashrc" ]; then
+    touch "$HOME/.bashrc"
+  fi
 
-# Remove brew-cask since it is now installed as part of brew tap caskroom/cask.
-# See https://github.com/caskroom/homebrew-cask/releases/tag/v0.60.0
-if brew_is_installed 'brew-cask'; then
-  brew uninstall --force 'brew-cask'
-  brew untap caskroom/versions
-fi
+  # shellcheck disable=SC2016
+  append_to_file "$HOME/.bashrc" 'export PATH="$HOME/.bin:$PATH"'
 
-fancy_echo "Updating Homebrew formulas ..."
-brew update
+  case "$SHELL" in
+    */bash) : ;;
+    *)
+      fancy_echo "Changing your shell to bash ..."
+        chsh -s "$(which bash)"
+      ;;
+  esac
+}
 
-fancy_echo "Verifying the Homebrew installation..."
-if brew doctor; then
-  fancy_echo "Your Homebrew installation is good to go."
-else
-  fancy_echo "Your Homebrew installation reported some errors or warnings."
-  echo "If the warnings are related to Python, you can ignore them."
-  echo "Otherwise, review the Homebrew messages to see if any action is needed."
-fi
+_init_homebrew() {
+  if ! command -v brew >/dev/null; then
+    fancy_echo "Installing Homebrew ..."
+      curl -fsS \
+        'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-if brew_is_installed 'cloudfoundry-cli'; then
-  brew uninstall --force cloudfoundry-cli
-fi
+      # shellcheck disable=SC2016
+      append_to_file "$HOME/.bashrc" 'export PATH="/usr/local/bin:$PATH"'
+  else
+    fancy_echo "Homebrew already installed. Skipping ..."
+  fi
 
-fancy_echo "Installing formulas and casks from the Brewfile ..."
-brew bundle
+  # Remove brew-cask since it is now installed as part of brew tap caskroom/cask.
+  # See https://github.com/caskroom/homebrew-cask/releases/tag/v0.60.0
+  if brew_is_installed 'brew-cask'; then
+    brew uninstall --force 'brew-cask'
+    brew untap caskroom/versions
+  fi
 
-# shellcheck disable=SC2016
-append_to_file "$HOME/.zshrc" 'eval "$(hub alias -s)"'
+  fancy_echo "Updating Homebrew formulas ..."
+  brew update
 
-fancy_echo 'Checking on Node.js installation...'
+  fancy_echo "Verifying the Homebrew installation..."
+  if brew doctor; then
+    fancy_echo "Your Homebrew installation is good to go."
+  else
+    fancy_echo "Your Homebrew installation reported some errors or warnings."
+    echo "If the warnings are related to Python, you can ignore them."
+    echo "Otherwise, review the Homebrew messages to see if any action is needed."
+  fi
 
-if ! brew_is_installed "node"; then
-  if ! command -v nvm > /dev/null; then
-    if ! command -v n > /dev/null; then
-      fancy_echo 'Installing n and latest Node.js and NPM...'
-      curl -L http://git.io/n-install | bash -s -- -y latest
+  if brew_is_installed 'cloudfoundry-cli'; then
+    brew uninstall --force cloudfoundry-cli
+  fi
+}
+
+# install node and npm
+_init_node() {
+  fancy_echo 'Checking on Node.js installation...'
+  if ! brew_is_installed "node"; then
+    if ! command -v nvm > /dev/null; then
+      if ! command -v n > /dev/null; then
+        fancy_echo 'Installing n and latest Node.js and NPM...'
+        curl -L http://git.io/n-install | bash -s -- -y latest
+      else
+        fancy_echo 'Updating n...'
+        n-update -y
+      fi
     else
-      fancy_echo 'Updating n...'
-      n-update -y
+      fancy_echo 'nvm detected.  Skipping...'
     fi
   else
-    fancy_echo 'nvm detected.  Skipping...'
-  fi
-else
-  brew bundle --file=- <<EOF
-  brew 'node'
+    brew bundle --file=- <<EOF
+    brew 'node'
 EOF
-fi
-
-fancy_echo '...Finished Node.js installation checks.'
-
-
-fancy_echo 'Checking on Python installation...'
-
-if ! brew_is_installed "python3"; then
-  brew bundle --file=- <<EOF
-  brew 'pyenv'
-  brew 'pyenv-virtualenv'
-  brew 'pyenv-virtualenvwrapper'
-EOF
-  # shellcheck disable=SC2016
-  append_to_file "$HOME/.zshrc" 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi'
-  # shellcheck disable=SC2016
-  append_to_file "$HOME/.zshrc" 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi'
-
-  # pyenv currently doesn't have a convenience version to use, e.g., "latest",
-  # so we check for the latest version against Homebrew instead.
-  latest_python_3="$(brew info python3 | sed -n -e 's/^.*python3: stable //p' | egrep -o "3\.\d+\.\d+")"
-
-  if ! pyenv versions | ag "$latest_python_3" > /dev/null; then
-    pyenv install "$latest_python_3"
-    pyenv global "$latest_python_3"
-    pyenv rehash
   fi
-else
-  brew bundle --file=- <<EOF
-  brew 'python3'
-EOF
-fi
+  fancy_echo '...Finished Node.js installation checks.'
+}
 
-if ! brew_is_installed "pyenv-virtualenvwrapper"; then
-  if ! pip3 list | ag "virtualenvwrapper" > /dev/null; then
-    fancy_echo 'Installing virtualenvwrapper...'
-    pip3 install virtualenvwrapper
-    append_to_file "$HOME/.zshrc" 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3'
-    append_to_file "$HOME/.zshrc" 'export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv'
-    append_to_file "$HOME/.zshrc" 'source /usr/local/bin/virtualenvwrapper.sh'
-  fi
-fi
-
-fancy_echo '...Finished Python installation checks.'
-
-
-fancy_echo 'Checking on Ruby installation...'
-
-append_to_file "$HOME/.gemrc" 'gem: --no-document'
-
-if ! command -v rbenv >/dev/null; then
-  if ! command -v rvm >/dev/null; then
-    fancy_echo 'Installing RVM and the latest Ruby...'
-    curl -L https://get.rvm.io | bash -s stable --ruby --auto-dotfiles --autolibs=enable
-    . ~/.rvm/scripts/rvm
-  else
-    local_version="$(rvm -v 2> /dev/null | awk '$2 != ""{print $2}')"
-    latest_version="$(curl -s https://raw.githubusercontent.com/wayneeseguin/rvm/stable/VERSION)"
-    if [ "$local_version" != "$latest_version" ]; then
-      fancy_echo 'Upgrading RVM...'
-      rvm get stable --auto-dotfiles --autolibs=enable --with-gems="bundler"
+# install rubies and gems
+_init_ruby() {
+  fancy_echo 'Checking on Ruby installation...'
+  append_to_file "$HOME/.gemrc" 'gem: --no-document'
+  if ! command -v rbenv >/dev/null; then
+    if ! command -v rvm >/dev/null; then
+      fancy_echo 'Installing RVM and the latest Ruby...'
+      curl -L https://get.rvm.io | bash -s stable --ruby --auto-dotfiles --autolibs=enable
+      . ~/.rvm/scripts/rvm
     else
-      fancy_echo "Already using the latest version of RVM. Skipping..."
+      local_version="$(rvm -v 2> /dev/null | awk '$2 != ""{print $2}')"
+      latest_version="$(curl -s https://raw.githubusercontent.com/wayneeseguin/rvm/stable/VERSION)"
+      if [ "$local_version" != "$latest_version" ]; then
+        fancy_echo 'Upgrading RVM...'
+        rvm get stable --auto-dotfiles --autolibs=enable --with-gems="bundler"
+      else
+        fancy_echo "Already using the latest version of RVM. Skipping..."
+      fi
     fi
   fi
-fi
+  fancy_echo 'Updating Rubygems...'
+  gem update --system
+  gem_install_or_update 'bundler'
+  gem_install_or_update 'capistrano'
+  fancy_echo "Configuring Bundler ..."
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
+  fancy_echo '...Finished Ruby installation checks.'
+  append_to_file "$HOME/.rvmrc" 'rvm_auto_reload_flag=2'
+  append_to_file "$HOME/.rvm/gemsets/global.gems" 'bundler'
+}
 
-fancy_echo 'Updating Rubygems...'
-gem update --system
+# install python, pip and packages
+_init_python() {
+  fancy_echo 'Checking on Python installation...'
+  if ! brew_is_installed "python"; then
+    fancy_echo 'Installing Python...'
+    brew bundle --file=- <<EOF
+    brew 'python'
+EOF
+  which python
+  python --version
+  which pip
+  pip --version
+  fi
+  pip_install_or_update 'pip'
+  pip_install_or_update 'setuptools'
+  pip_install_or_update 'distribute'
+  pip_install_or_update 'virtualenv'
+  pip_install_or_update 'virtualenvwrapper'
+  append_to_file "$HOME/.bashrc" 'export WORKON_HOME=$HOME/.virtualenvs'
+  append_to_file "$HOME/.bashrc" 'export PIP_VIRTUALENV_BASE=$WORKON_HOME'
+  append_to_file "$HOME/.bashrc" 'export PIP_RESPECT_VIRTUALENV=true'
+  append_to_file "$HOME/.bashrc" 'source /usr/local/bin/virtualenvwrapper.sh'
+  pip_install_or_update 'MySQL-python'
+  pip_install_or_update 'psycopg2'
+  pip_install_or_update 'csvkit'
+  pip_install_or_update 'agate'
+  pip_install_or_update 'numpy'
+  pip_install_or_update 'matplotlib'
+  if ! brew_is_installed "python3"; then
+    fancy_echo 'Installing Python3...'
+    brew bundle --file=- <<EOF
+    brew 'python3'
+EOF
+  fi
+  fancy_echo '...Finished Python installation checks.'
+}
 
-gem_install_or_update 'bundler'
+# install mysql and config to start at login
+_init_mysql() {
+  fancy_echo 'Checking on MySQL installation...'
+  if ! brew_is_installed "mysql"; then
+    fancy_echo 'Installing mysql'
+    brew install mysql
+    brew services start mysql
+  else
+    fancy_echo 'MySQL already installed'
+    ## to clean up mysql install ##
+    # brew remove mysql
+    # brew cleanup
+    # launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+    # rm ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+    # sudo rm -rf /usr/local/var/mysql
+  fi
+  fancy_echo '...Finished MySQL installation checks.'
+}
 
-fancy_echo "Configuring Bundler ..."
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+# install postgresql and config to start at login
+_init_postgresql() {
+  fancy_echo 'Checking on PostgreSQL installation...'
+  if ! brew_is_installed "postgresql"; then
+    fancy_echo 'Installing postgresql'
+    pip_install_or_update 'numpy'
+    brew install postgresql
+    brew install gdal --complete --with-postgresql
+    brew install postgis
+    brew install grass
+    brew services start postgresql
+  else
+    fancy_echo 'PostgreSQL already installed'
+  fi
+  fancy_echo '...Finished PostgreSQL installation checks.'
+}
 
-fancy_echo '...Finished Ruby installation checks.'
+# install qgis
+_init_qgis() {
+  fancy_echo 'Checking on QGIS installation...'
+  if ! brew_is_installed "qgis-28"; then
+    fancy_echo 'Installing QGIS 2.8'
+    brew install qgis-28 --with-grass --with-postgis
+    brew linkapps qgis-28
+  else
+    fancy_echo 'QGIS 2.8 already installed'
+  fi
+  fancy_echo '...Finished QGIS installation checks.'
+}
 
-if [ -f "$HOME/.laptop.local" ]; then
-  . "$HOME/.laptop.local"
-fi
+# install sublime text 3 and packages
+_init_sublime_text() {
+  if ! app_is_installed 'Sublime Text'; then
+    fancy_echo 'Installing Sublime Text 3'
+    brew cask install sublime-text3
 
-append_to_file "$HOME/.rvmrc" 'rvm_auto_reload_flag=2'
-append_to_file "$HOME/.rvm/gemsets/global.gems" 'bundler'
+  # cd ~/Library/Application\ Support/Sublime\ Text\ 3
+  # rm -rf Packages
+  # rm -rf Installed\ Packages
+  # ln -s /Volumes/one_tb_hd/sublime-text-3/Packages
+  # ln -s /Volumes/one_tb_hd/sublime-text-3/Installed\ Packages
 
-if app_is_installed 'GitHub'; then
-  fancy_echo "It looks like you've already configured your GitHub SSH keys."
-  fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
-elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
-  open ~/Applications/GitHub\ Desktop.app
-fi
+  else
+    fancy_echo 'Sublime Text 3 already installed'
+  fi
 
-fancy_echo 'All done!'
+  # sublime text tools from the command line:
+  fancy_echo "Installing Sublime Text Command Line Tools ..."
+  if [ ! -h /usr/local/bin/sublime ]; then
+    sudo ln -s "~/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
+  fi
+}
+
+# move my important dotfiles over
+move_bak_files() {
+  bak_path="$1"
+  bak_folder="$2"
+  bak_file="$3"
+  new_location="$4"
+  if [ ! -f $new_location/$bak_file ]; then
+    fancy_echo "$bak_file not found..."
+    fancy_echo "Move $bak_file..."
+    cp -R $bak_path/$bak_folder/$bak_file $new_location/$bak_file
+  else
+    fancy_echo "$bak_file already exists at $new_location/$bak_file..."
+  fi
+}
+
+## run the script ##
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+set -e
+
+# _init_home_dir
+# _init_homebrew
+
+# fancy_echo "Installing formulas and casks from the Brewfile ..."
+# brew bundle
+
+
+
+# _init_node
+# _init_ruby
+# _init_python
+# _init_mysql
+# _init_postgresql
+# _init_qgis
+# _init_sublime_text
+
+
+
+
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
+
+
+
+
+# if app_is_installed 'GitHub'; then
+#   fancy_echo "It looks like you've already configured your GitHub SSH keys."
+#   fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
+# elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
+#   open ~/Applications/GitHub\ Desktop.app
+# fi
+
+# apparently no longer needed. but this line signs unknown apps allowing os x users to open it. leaving this while testing.
+# codesign -f -s - ~/Applications/Google\ Refine.app/Contents/MacOS/JavaApplicationStub
+
+## install from local customizations file ##
+# if [ -f "$HOME/.laptop.local" ]; then
+#   . "$HOME/.laptop.local"
+# fi
+
+# fancy_echo "Cleaning up Homebrew Cask downloads and tracker symlinks ..."
+# brew cask cleanup
+
+# fancy_echo "Cleaning up Homebrew formulas ..."
+# brew cleanup
+
+# fancy_echo "Pruning Homebrew symlinks and directories ..."
+# brew prune
+
+
+
+# Fix font smoothing
+defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
+
+# Disable window animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+# Enable repeat on keydown
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+# Show Path bar in Finder
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Show Status bar in Finder
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Show indicator lights for open applications in the Dock
+defaults write com.apple.dock show-process-indicators -bool true
+
+# Enable AirDrop over Ethernet and on unsupported Macs running Lion
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+
+# Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+
+# Set a shorter Delay until key repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
+
+# Enable Safari’s debug menu
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Show the ~/Library folder
+chflags nohidden ~/Library
+
+fancy_echo "All done! Your machine is set. Now get to work!"

@@ -336,6 +336,20 @@ move_bak_files() {
   fi
 }
 
+move_bak_directory() {
+  bak_path="$1"
+  bak_folder="$2"
+  bak_directory="$3"
+  new_location="$4"
+  if [ ! -d $new_location/$bak_directory ]; then
+    fancy_echo "$bak_directory not found..."
+    fancy_echo "Move $bak_directory..."
+    cp -R $bak_path/$bak_folder/$bak_directory $new_location/$bak_directory
+  else
+    fancy_echo "$bak_directory already exists at $new_location/$bak_directory..."
+  fi
+}
+
 ## run the script ##
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
@@ -358,23 +372,18 @@ set -e
 # _init_sublime_text
 
 
-
-
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
+move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
 move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
-
-
-
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
+move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."
@@ -399,8 +408,6 @@ move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtual
 
 # fancy_echo "Pruning Homebrew symlinks and directories ..."
 # brew prune
-
-
 
 # Fix font smoothing
 defaults -currentHost write -globalDomain AppleFontSmoothing -int 0

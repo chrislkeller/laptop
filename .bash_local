@@ -12,6 +12,7 @@ WHITE="\[\033[0;37m\]"
 LIGHT_GRAY="\[\033[1;37m\]"
 COLOR_NONE="\[\e[0m\]"
 
+# custom prompt for git repos
 function parse_git_branch {
     git rev-parse --git-dir > /dev/null 2>&1
 
@@ -69,3 +70,55 @@ function parse_git_branch {
 
 export PS1="[$GREEN\d $GREEN\A] $RED[\w] $YELLOW\$(parse_git_branch)$WHITE\n..."
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+
+# aliases #
+
+# kill django manage.py operation
+alias kill_py="ps aux | grep -i manage"
+
+# start postgres database
+alias pgdown='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+alias pgup='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+
+# show dotfiles and dotfolders in finder
+alias file_show="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
+alias file_hide="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
+
+# start off in dev directory
+cd ~/_programming/ && clear && ls
+
+# cause i'm too lazy
+alias ..='cd ..  && clear && ls'
+alias termstart='cd ~ && source ~/.bash_profile'
+alias home='cd ~  && clear && ls'
+alias start='cd ~/_programming/ && clear && ls'
+alias py='python'
+alias db='mysql.server start'
+alias g='git'
+alias slime='subl'
+alias rmv='rm -rf'
+alias delete-store="find . -name '*.DS_Store' -type f -delete"
+
+# run devservers
+alias devsvr='open http://127.0.0.1:8880/ && python -m SimpleHTTPServer 8880'
+alias devkpcc='open http://127.0.0.1:8880/2kpcc/_projects/static_projects/test/keller/ && python -m SimpleHTTPServer 8880'
+
+# provide tunnel access to localhost
+alias localshare='localtunnel 8880'
+alias localdjango='localtunnel 8000'
+
+# open files in MOU
+alias mou='open -a "MOU"'
+
+# resize images
+alias png-size='sips -Z 600 *.png'
+alias jpg-size='sips -Z 600 *.jpg'
+
+# start hubot
+alias hubot_start='cd ~/_programming/hubot && bin/hubot'
+
+# start redis server
+alias redis='redis-server'
+
+# reset the mac os launchpad
+alias launchpad='defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock'

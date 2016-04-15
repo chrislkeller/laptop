@@ -15,8 +15,8 @@ fancy_echo() {
 
 # function to add to a file
 append_to_file() {
-  local file="$1"
-  local text="$2"
+  file="$1"
+  text="$2"
 
   # if there is a .bashrc
   if [ "$file" = "$HOME/.bashrc" ]; then
@@ -390,24 +390,19 @@ set -e
 # move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
 # move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
 
-cat <<EOT >> ~/.bash_profile
-# include .bashrc if it exists
-if [ -f ~/.bashrc ] ; then
-     source ~/.bashrc
-fi
-EOT
+append_to_file "$HOME/.bash_profile" $'# include .bashrc if it exists\nif [ -f ~/.bashrc ] ; then\n  source ~/.bashrc\nfi'
 
-cat <<EOT >> ~/.bashrc
-# adds bashcompletion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
-fi
+append_to_file "$HOME/.bashrc" $'# adds bashcompletion\nif [ -f $(brew --prefix)/etc/bash_completion ]; then\n  $(brew --prefix)/etc/bash_completion\nfi'
 
-# include .bash_local if it exists
-if [ -f ~/.bash_local ] ; then
-     source ~/.bash_local
+append_to_file "$HOME/.bashrc" $'# include .bash_local if it exists\nif [ -f ~/.bash_local ] ; then\n  source ~/.bash_local\nfi'
+
+if [ ! -f ~/.bash_local ]; then
+  fancy_echo "Downloading .bash_local..."
+  cd ~
+  curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/.bash_local
+else
+  fancy_echo ".bash_local already exists..."
 fi
-EOT
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."

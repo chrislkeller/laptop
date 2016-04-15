@@ -358,75 +358,7 @@ move_bak_directory() {
   fi
 }
 
-## run the script ##
-# shellcheck disable=SC2154
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-set -e
-
-# _init_home_dir
-# _init_homebrew
-
-# fancy_echo "Installing formulas and casks from the Brewfile ..."
-# brew bundle
-
-# _init_node
-# _init_ruby
-# _init_python
-# _init_mysql
-# _init_postgresql
-# _init_qgis
-# _init_sublime_text
-
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
-# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
-# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
-
-append_to_file "$HOME/.bash_profile" $'# include .bashrc if it exists\nif [ -f ~/.bashrc ] ; then\n  source ~/.bashrc\nfi'
-
-append_to_file "$HOME/.bashrc" $'# adds bashcompletion\nif [ -f $(brew --prefix)/etc/bash_completion ]; then\n  $(brew --prefix)/etc/bash_completion\nfi'
-
-append_to_file "$HOME/.bashrc" $'# include .bash_local if it exists\nif [ -f ~/.bash_local ] ; then\n  source ~/.bash_local\nfi'
-
-if [ ! -f ~/.bash_local ]; then
-  fancy_echo "Downloading .bash_local..."
-  cd ~
-  curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/.bash_local
-else
-  fancy_echo ".bash_local already exists..."
-fi
-
-# if app_is_installed 'GitHub'; then
-#   fancy_echo "It looks like you've already configured your GitHub SSH keys."
-#   fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
-# elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
-#   open ~/Applications/GitHub\ Desktop.app
-# fi
-
-# apparently no longer needed. but this line signs unknown apps allowing os x users to open it. leaving this while testing.
-# codesign -f -s - ~/Applications/Google\ Refine.app/Contents/MacOS/JavaApplicationStub
-
-## install from local customizations file ##
-# if [ -f "$HOME/.laptop.local" ]; then
-#   . "$HOME/.laptop.local"
-# fi
-
-# fancy_echo "Cleaning up Homebrew Cask downloads and tracker symlinks ..."
-# brew cask cleanup
-
-# fancy_echo "Cleaning up Homebrew formulas ..."
-# brew cleanup
-
-# fancy_echo "Pruning Homebrew symlinks and directories ..."
-# brew prune
+_init_system_settings() {
 
 # fix font smoothing
 defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
@@ -463,5 +395,128 @@ defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 # show the ~/library folder
 chflags nohidden ~/Library
+
+# save screenshots to the desktop
+defaults write com.apple.screencapture location -string "$HOME/Desktop"
+
+# save screenshots in png format (other options: bmp, gif, jpg, pdf, tiff)
+defaults write com.apple.screencapture type -string "png"
+
+# disable shadow in screenshots
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# menu bar: show remaining battery time (on pre-10.8); hide percentage
+defaults write com.apple.menuextra.battery ShowPercent -string "NO"
+defaults write com.apple.menuextra.battery ShowTime -string "YES"
+
+# enable snap-to-grid for icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+## Spotlight ##
+# disable spotlight indexing for any volume that gets mounted and has not yet been indexed before.
+sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+
+# change indexing order and disable some file types
+defaults write com.apple.spotlight orderedItems -array \
+  '{"enabled" = 1;"name" = "APPLICATIONS";}' \
+  '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+  '{"enabled" = 1;"name" = "DIRECTORIES";}' \
+  '{"enabled" = 1;"name" = "PDF";}' \
+  '{"enabled" = 1;"name" = "FONTS";}' \
+  '{"enabled" = 0;"name" = "DOCUMENTS";}' \
+  '{"enabled" = 0;"name" = "MESSAGES";}' \
+  '{"enabled" = 0;"name" = "CONTACT";}' \
+  '{"enabled" = 0;"name" = "EVENT_TODO";}' \
+  '{"enabled" = 0;"name" = "IMAGES";}' \
+  '{"enabled" = 0;"name" = "BOOKMARKS";}' \
+  '{"enabled" = 0;"name" = "MUSIC";}' \
+  '{"enabled" = 0;"name" = "MOVIES";}' \
+  '{"enabled" = 0;"name" = "PRESENTATIONS";}' \
+  '{"enabled" = 0;"name" = "SPREADSHEETS";}' \
+  '{"enabled" = 0;"name" = "SOURCE";}'
+
+# load new settings before rebuilding the index
+killall mds
+
+# make sure indexing is enabled for the main volume
+sudo mdutil -i on /
+
+# rebuild the index from scratch
+sudo mdutil -E /
+}
+
+_init_bak_files_and_folders() {
+  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
+  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
+  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
+  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
+  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
+}
+
+_init_bash_aliases() {
+  append_to_file "$HOME/.bash_profile" $'# include .bashrc if it exists\nif [ -f ~/.bashrc ] ; then\n  source ~/.bashrc\nfi'
+  append_to_file "$HOME/.bash_profile" $'# adds bashcompletion\nif [ -f $(brew --prefix)/etc/bash_completion.d ]; then\n  $(brew --prefix)/etc/bash_completion.d\nfi'
+  append_to_file "$HOME/.bashrc" $'# include .bash_local if it exists\nif [ -f ~/.bash_local ] ; then\n  source ~/.bash_local\nfi'
+
+  if [ ! -f ~/.bash_local ]; then
+    fancy_echo "Downloading .bash_local..."
+    cd ~
+    curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/.bash_local
+  else
+    fancy_echo ".bash_local already exists..."
+  fi
+}
+
+## run the script ##
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+set -e
+
+# _init_home_dir
+# _init_homebrew
+
+# fancy_echo "Installing formulas and casks from the Brewfile ..."
+# brew bundle
+
+# _init_node
+# _init_ruby
+# _init_python
+# _init_mysql
+# _init_postgresql
+# _init_qgis
+# _init_sublime_text
+# _init_bak_files_and_folders
+# _init_bash_aliases
+# _init_system_settings
+
+# if app_is_installed 'GitHub'; then
+#   fancy_echo "It looks like you've already configured your GitHub SSH keys."
+#   fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
+# elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
+#   open ~/Applications/GitHub\ Desktop.app
+# fi
+
+## install from local customizations file ##
+# if [ -f "$HOME/.laptop.local" ]; then
+#   . "$HOME/.laptop.local"
+# fi
+
+fancy_echo "Cleaning up Homebrew Cask downloads and tracker symlinks ..."
+brew cask cleanup
+
+fancy_echo "Cleaning up Homebrew formulas ..."
+brew cleanup
+
+fancy_echo "Pruning Homebrew symlinks and directories ..."
+brew prune
 
 fancy_echo "All done! Your machine is set. Now get to work!"

@@ -6,6 +6,8 @@ tap 'homebrew/services'
 
 tap 'homebrew/dupes'
 
+brew 'shellcheck'
+
 brew 'ack'
 
 brew 'bash-completion'

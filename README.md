@@ -1,6 +1,7 @@
-Laptop
-======
-[![Build Status](https://travis-ci.org/18F/laptop.svg)](https://travis-ci.org/18F/laptop)
+Keller's Kool Laptop
+====================
+
+~~[![Build Status](https://travis-ci.org/18F/laptop.svg)](https://travis-ci.org/18F/laptop)~~
 
 Laptop is a script to set up an OS X computer for web development.
 
@@ -11,59 +12,158 @@ based on what is already installed on the machine.
 Requirements
 ------------
 
-We support:
+Tested:
 
 * [OS X El Capitan (10.11)](https://www.apple.com/osx/)
-* OS X Yosemite (10.10)
-* OS X Mavericks (10.9)
 
-Older versions may work but aren't regularly tested. Bug reports for older
-versions are welcome.
+Older versions may work but aren't regularly tested. Bug reports for older versions are welcome.
 
-Install
--------
+Performing Clean Install
+------------------------
+
+* [Create Bootable OS X USB Installation Drive](http://www.macworld.com/article/2367748/how-to-make-a-bootable-os-x-10-10-yosemite-install-drive.html)
+    * Download ~~OS X Yosemite~~ the latest OS upgrade from the Mac App Store
+    * With a USB drive > 8GB, open Disk Utility and select the drive in the sidebar
+    * Format the drive as "Mac OS Extended (Journaled)" and name it "Untitled"
+    * The installer should be in your Applications folder
+    * [Run the following from the CLI](http://forums.macrumors.com/showpost.php?p=18081307&postcount=3) and "wait about 20 minutes"
+
+            sudo /Applications/<name-of-installer>/Contents/Resources/createinstallmedia --volume /Volumes/Untitled --applicationpath /Applications/<name-of-installer> --nointeraction
+
+    * You should see something like this:
+
+            Erasing Disk: 0%... 10%... 20%... 100%...
+            Copying installer files to disk...
+            Copy complete.
+            Making disk bootable...
+            Copying boot files...
+            Copy complete.
+            Done.
+
+    * When it's done, you should get a message stating the process is finished
+    * Restart your computer and hold the Option key to access the boot menu
+    * Select your new USB drive to install a clean copy of OS X Yosemite
+
+After The Clean Install
+-----------------------
 
 Begin by opening the Terminal application on your Mac. The easiest way to open
-an application in OS X is to search for it via [Spotlight]. The default
-keyboard shortcut for invoking Spotlight is `command-Space`. Once Spotlight
-is up, just start typing the first few letters of the app you are looking for,
-and once it appears, press `return` to launch it.
+an application in OS X is to search for it via [Spotlight](https://support.apple.com/en-us/HT204014). The default keyboard shortcut for invoking Spotlight is `command-Space`. Once Spotlight is up, just start typing the first few letters of the app you are looking for, and once it appears, press `return` to launch it.
 
-In your Terminal window, copy and paste each of these three commands one at a
-time, then press `return` after each one. The first two commands download the
-files the script needs to run, and the third command executes the script.
+* Uninstall any existing development tools
 
-```sh
-curl --remote-name https://raw.githubusercontent.com/18F/laptop/master/mac
-curl --remote-name https://raw.githubusercontent.com/18F/laptop/master/Brewfile
-bash mac 2>&1 | tee ~/laptop.log
-```
-The [script](https://github.com/18F/laptop/blob/master/mac) itself is
-available in this repo for you to review if you want to see what it does
-and how it works.
+        sudo /Developer/Library/uninstall-devtools
 
-Note that the script will ask you to enter your OS X password at various
-points. This is the same password that you use to log in to your Mac.
-If you don't already have it installed, GitHub for Mac will launch
-automatically at the end of the script so you can set up everything you'll
-need to push code to GitHub.
+* Skip XCode and go for the Command Line Tools for XCode. It's much faster than installing the whole XCode suite, which is huge and I don't do anything with it. I will miss the iOS simulators though.
 
-**Once the script is done, make sure to quit and relaunch Terminal.**
+    * More on this method [here](http://www.bloggure.info/work/installing-homebrew-without-xcode.html).
 
-More [detailed instructions with a video][video] are available in the Wiki.
+    * Run the following from your terminal
 
-[Spotlight]: https://support.apple.com/en-us/HT204014
-[video]: https://github.com/18F/laptop/wiki/Detailed-installation-instructions-with-video
+            ```sh
+            xcode-select --install
+            ```
+
+    * You'll get a prompt to "Get Xcode", "Cancel", or "Install". Skip installing the entire Xcode application. Choose install to get the Command Line Tools.
+
+    * If the above errors out, you can download [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action). Then open the Command Line Tools for XCode dmg and install.
+
+* Unfurl the Setup Script
+
+    * Proceed using a script based on the work shown in [Laptop](https://github.com/thoughtbot/laptop/blob/master/README.md), a version used by [The Associated Press](https://github.com/associatedpress/laptop) and a version used by [18F](https://github.com/18F/laptop).
+
+    * In your Terminal window, copy and paste each of these three commands one at a time, then press `return` after each one. The first two commands download the files the script needs to run, and the third command executes the script.
+
+    * Download the scripts from the GitHub repository and run them
+
+            ```sh
+            curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/mac
+            curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/Brewfile
+            curl --remote-name https://raw.githubusercontent.com/chrislkeller/laptop/master/.laptop.local
+            bash mac 2>&1 | tee ~/Desktop/laptop.log
+            ```
+
+    * The [script](https://github.com/chrislkeller/laptop/blob/master/mac) itself is available in this repo for you to review if you want to see what it does and how it works.
+
+    * Note that the script will ask you to enter your OS X password at various points. This is the same password that you use to log in to your Mac.
+
+    * **Once the script is done, make sure to quit and relaunch Terminal.**
+
+            ```sh
+            source ~/.bash_profile
+            ```
+
+    * More [detailed instructions with a video](https://github.com/18F/laptop/wiki/Detailed-installation-instructions-with-video) are available in the Wiki.
 
 Debugging
 ---------
 
-Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
-you can debug the issue yourself. If not, copy and paste the entire log into a
-[new GitHub Issue](https://github.com/18F/laptop/issues/new) for us.
+Your last Laptop run will be saved to `~/Desktop/laptop.log`. Read through it to see if you can debug the issue yourself. If not, copy and paste the entire log into a [new GitHub Issue](https://github.com/18F/laptop/issues/new) for us.
 
-What it sets up
----------------
+What's being set up
+-------------------
+
+* Create your ```.bashrc```.
+* Install, update and check [homebrew](http://mxcl.github.com/homebrew/) for managing packages.
+* Configure ```$PATH``` variables for homebrew
+* Install [homevbrew-cask](https://github.com/caskroom/homebrew-cask) for managing native applications.
+* Install homebrew versions of ```node.js``` and ```npm```
+* Update ```Ruby```, install ```rvm```, update ```gems```, install ```bundler``` and ```capistrano```
+    * rvm install 1.9.3 --with-gcc=clang
+* Install homebrew versions of ```python```, ```python3```, ```pip```, ```virtualenv``` and ```virtualenvwrapper```
+* Upgrade ```setuptools``` and ```distribute```
+* Configure ```$PATH``` variables for ```virtualenv```
+* install csvkit and agate
+* Configure ```$PATH``` variables for ```rvm```
+* Install MySQL and start at login
+* Install Postgres and PostGIS
+    * These links helped with the Postgres install
+        * [To create a spatially-enabled database](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)
+        * [Users of 1.5 and below will need to go the hard-upgrade path, see here](http://postgis.net/docs/manual-2.1/postgis_installation.html#upgrading)
+        * PostGIS SQL scripts installed to ```/usr/local/share/postgis```
+        * PostGIS plugin libraries installed to ```/usr/local/opt/postgresql/lib```
+        * PostGIS extension modules installed to ```/usr/local/opt/postgresql/share/postgresql/extension```
+* Install QGIS 2.8
+
+
+
+
+
+    * alias db-load='cd ~/_programming/_mach_dotfiles/shell-scripts && py ~/_programming/_mach_dotfiles/shell-scripts/db-load.py'
+
+    * source ~/.bash_profile
+    * slime ~/programming
+
+    * Install IE vms
+
+            ```curl -s https://raw.githubusercontent.com/xdissent/ievms/master/ievms.sh | env IEVMS_VERSIONS="8 9 10 11" INSTALL_PATH="/Volumes/one_tb_hd/virtualbox_vms/ie_vms" bash```
+
+        * You may remove all files except *.vmdk after installation and they will be re-downloaded if ievms is run again in the future:
+
+            ```$ find ~/.ievms -type f ! -name "*.vmdk" -exec rm {} \;```
+
+        * Copy And Paste Between [VirtualBox Host And Guest Machines](https://www.liberiangeek.net/2013/09/copy-paste-virtualbox-host-guest-machines/)
+
+        * Access host localhost by going to [http://10.0.2.2:8880](http://10.0.2.2:8880) on the guest
+
+        * Misc
+            * Download [AppCleaner](http://www.freemacsoft.net/appcleaner/) and get rid of some cruft if you want.
+                * Or delete from the command line
+
+                        cd /Applications/
+                        sudo rm -rf Stickies.app/
+                        sudo rm -rf Chess.app/
+                        sudo rm -rf Photo\ Booth.app
+
+
+
+
+
+
+
+
+
+
 
 * [CloudApp] for sharing screenshots and making an animated GIF from a video
 * [Cloud Foundry CLI] for command line access to 18F's Cloud Foundry-based application platform
@@ -116,8 +216,26 @@ What it sets up
 [Virtualenvwrapper]: http://virtualenvwrapper.readthedocs.org/en/latest/#
 [Zsh]: http://www.zsh.org/
 
-It should take less than 15 minutes to install (depends on your machine and
-internet connection).
+
+
+----
+
+Load up bak MySQL databases
+---------------------------
+
+```setup-dbload.py``` is an example python script to - given a directory of .sql files - load them one by one into a local MySQL instance. It assumes ```MySQLdb``` has been installed via pip or another python package manager.
+
+Load up bak virtualenvs
+-----------------------
+
+```setup-requirements.sh``` is an example shell script to - given a directory of virtualenv requirements.txt files - load them one by one into a specific virtualenv. It assumes ```virtualenv``` and ```virtualenvwrapper``` has been installed via pip or another python package manager.
+
+----
+
+
+
+
+
 
 Customize in `~/.laptop.local` and `Brewfile`
 ---------------------------------------------
@@ -218,8 +336,7 @@ brew services start --all
 Credits
 -------
 
-The 18F laptop script is based on and inspired by
-[thoughtbot's laptop](https://github.com/thoughtbot/laptop) script.
+Keller's Kool Laptop script is based on and inspired by the work shown in [Laptop](https://github.com/thoughtbot/laptop/blob/master/README.md), a version used by [The Associated Press](https://github.com/associatedpress/laptop) and a version used by [18F](https://github.com/18F/laptop).
 
 ### Public domain
 

@@ -319,6 +319,9 @@ _init_sublime_text() {
   rm -rf ~/Desktop/Packages
   rm -rf ~/Desktop/.svn
 
+  fancy_echo 'Replace Sublime Text 3 icon...'
+  cp sublime-text-icon/sublime-text-3.icns /Applications/Sublime\ Text.app/Contents/Resources/Sublime\ Text.icns
+
   # sublime text tools from the command line:
   fancy_echo 'Installing Sublime Text Command Line Tools …'
   if [ ! -h /usr/local/bin/sublime ]; then
@@ -372,7 +375,7 @@ set -e
 # _init_mysql
 # _init_postgresql
 # _init_qgis
-_init_sublime_text
+# _init_sublime_text
 
 # move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
 # move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
@@ -386,6 +389,25 @@ _init_sublime_text
 # move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
 # move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
 # move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
+
+cat <<EOT >> ~/.bash_profile
+# include .bashrc if it exists
+if [ -f ~/.bashrc ] ; then
+     source ~/.bashrc
+fi
+EOT
+
+cat <<EOT >> ~/.bashrc
+# adds bashcompletion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+
+# include .bash_local if it exists
+if [ -f ~/.bash_local ] ; then
+     source ~/.bash_local
+fi
+EOT
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."
@@ -411,40 +433,40 @@ _init_sublime_text
 # fancy_echo "Pruning Homebrew symlinks and directories ..."
 # brew prune
 
-# Fix font smoothing
+# fix font smoothing
 defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
 
-# Disable window animations
+# disable window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
-# Enable repeat on keydown
+# enable repeat on keydown
 defaults write -g ApplePressAndHoldEnabled -bool false
 
-# Show Path bar in Finder
+# show path bar in finder
 defaults write com.apple.finder ShowPathbar -bool true
 
-# Show Status bar in Finder
+# show status bar in finder
 defaults write com.apple.finder ShowStatusBar -bool true
 
-# Show indicator lights for open applications in the Dock
+# show indicator lights for open applications in the dock
 defaults write com.apple.dock show-process-indicators -bool true
 
-# Enable AirDrop over Ethernet and on unsupported Macs running Lion
+# enable airdrop over ethernet and on unsupported macs running lion
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
-# Set a blazingly fast keyboard repeat rate
+# set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0.02
 
-# Set a shorter Delay until key repeat
+# set a shorter delay until key repeat
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
-# Enable Safari’s debug menu
+# enable safari’s debug menu
 defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
-# Add a context menu item for showing the Web Inspector in web views
+# add a context menu item for showing the web inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# Show the ~/Library folder
+# show the ~/library folder
 chflags nohidden ~/Library
 
 fancy_echo "All done! Your machine is set. Now get to work!"

@@ -303,19 +303,24 @@ _init_sublime_text() {
   if ! app_is_installed 'Sublime Text'; then
     fancy_echo 'Installing Sublime Text 3'
     brew cask install sublime-text3
-
-  # cd ~/Library/Application\ Support/Sublime\ Text\ 3
-  # rm -rf Packages
-  # rm -rf Installed\ Packages
-  # ln -s /Volumes/one_tb_hd/sublime-text-3/Packages
-  # ln -s /Volumes/one_tb_hd/sublime-text-3/Installed\ Packages
-
   else
     fancy_echo 'Sublime Text 3 already installed'
   fi
 
+  fancy_echo 'Downloading sublime-text-packages to Desktop…'
+  svn checkout https://github.com/chrislkeller/laptop/trunk/sublime-text-packages/ $HOME/Desktop
+
+  fancy_echo 'Moving sublime-text-packages to Application Support…'
+  mv ~/Desktop/Installed\ Packages ~/Library/Application\ Support/Sublime\ Text\ 3/Installed\ Packages
+  mv ~/Desktop/Packages ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
+
+  fancy_echo 'Deleting sublime-text-packages from Desktop…'
+  rm -rf ~/Desktop/Installed\ Packages
+  rm -rf ~/Desktop/Packages
+  rm -rf ~/Desktop/.svn
+
   # sublime text tools from the command line:
-  fancy_echo "Installing Sublime Text Command Line Tools ..."
+  fancy_echo 'Installing Sublime Text Command Line Tools …'
   if [ ! -h /usr/local/bin/sublime ]; then
     sudo ln -s "~/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
   fi
@@ -361,28 +366,26 @@ set -e
 # fancy_echo "Installing formulas and casks from the Brewfile ..."
 # brew bundle
 
-
-
 # _init_node
 # _init_ruby
 # _init_python
 # _init_mysql
 # _init_postgresql
 # _init_qgis
-# _init_sublime_text
+_init_sublime_text
 
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
-move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
-move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
+# move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
+# move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."

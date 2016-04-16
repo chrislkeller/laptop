@@ -6,4 +6,4 @@ before_script:
   - sudo apt-get install -qq shellcheck
 
 script:
-  - shellcheck mac
+  - shellcheck setup_mac

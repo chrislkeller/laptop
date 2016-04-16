@@ -8,7 +8,7 @@
 
 # function to print to the terminal
 fancy_echo() {
-  local fmt="$1"; shift
+  fmt="$1"; shift
   # shellcheck disable=SC2059
   printf "\n$fmt\n" "$@"
 }
@@ -93,7 +93,7 @@ pip_install_or_update() {
 }
 
 app_is_installed() {
-  local app_name
+  app_name
   app_name=$(echo "$1" | cut -d'-' -f1)
   find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
 }

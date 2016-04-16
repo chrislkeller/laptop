@@ -25,7 +25,7 @@ Follow shell style guidelines by using [ShellCheck].
 brew install shellcheck
 
 # Run shellcheck from the root of the repo
-shellcheck mac
+shellcheck setup_mac
 ```
 
 [ShellCheck]: http://www.shellcheck.net/about.html

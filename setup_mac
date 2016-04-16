@@ -295,6 +295,7 @@ _init_qgis() {
   else
     fancy_echo 'QGIS 2.8 already installed'
   fi
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.qgis2' $HOME
   fancy_echo '...Finished QGIS installation checks.'
 }
 
@@ -325,7 +326,7 @@ _init_sublime_text() {
   # sublime text tools from the command line:
   fancy_echo 'Installing Sublime Text Command Line Tools …'
   if [ ! -h /usr/local/bin/sublime ]; then
-    sudo ln -s "~/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
+    sudo ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
   fi
 }
 
@@ -360,106 +361,100 @@ move_bak_directory() {
 
 _init_system_settings() {
 
-# fix font smoothing
-defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
+    # fix font smoothing
+    defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
 
-# disable window animations
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+    # disable window animations
+    defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
-# enable repeat on keydown
-defaults write -g ApplePressAndHoldEnabled -bool false
+    # enable repeat on keydown
+    defaults write -g ApplePressAndHoldEnabled -bool false
 
-# show path bar in finder
-defaults write com.apple.finder ShowPathbar -bool true
+    # show path bar in finder
+    defaults write com.apple.finder ShowPathbar -bool true
 
-# show status bar in finder
-defaults write com.apple.finder ShowStatusBar -bool true
+    # show status bar in finder
+    defaults write com.apple.finder ShowStatusBar -bool true
 
-# show indicator lights for open applications in the dock
-defaults write com.apple.dock show-process-indicators -bool true
+    # show indicator lights for open applications in the dock
+    defaults write com.apple.dock show-process-indicators -bool true
 
-# enable airdrop over ethernet and on unsupported macs running lion
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+    # enable airdrop over ethernet and on unsupported macs running lion
+    defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
-# set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0.02
+    # set a blazingly fast keyboard repeat rate
+    defaults write NSGlobalDomain KeyRepeat -int 0.02
 
-# set a shorter delay until key repeat
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
+    # set a shorter delay until key repeat
+    defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
-# enable safari’s debug menu
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+    # enable safari’s debug menu
+    defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
-# add a context menu item for showing the web inspector in web views
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+    # add a context menu item for showing the web inspector in web views
+    defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# show the ~/library folder
-chflags nohidden ~/Library
+    # show the ~/library folder
+    chflags nohidden ~/Library
 
-# save screenshots to the desktop
-defaults write com.apple.screencapture location -string "$HOME/Desktop"
+    # save screenshots to the desktop
+    defaults write com.apple.screencapture location -string "$HOME/Desktop"
 
-# save screenshots in png format (other options: bmp, gif, jpg, pdf, tiff)
-defaults write com.apple.screencapture type -string "png"
+    # save screenshots in png format (other options: bmp, gif, jpg, pdf, tiff)
+    defaults write com.apple.screencapture type -string "png"
 
-# disable shadow in screenshots
-defaults write com.apple.screencapture disable-shadow -bool true
+    # disable shadow in screenshots
+    defaults write com.apple.screencapture disable-shadow -bool true
 
-# menu bar: show remaining battery time (on pre-10.8); hide percentage
-defaults write com.apple.menuextra.battery ShowPercent -string "NO"
-defaults write com.apple.menuextra.battery ShowTime -string "YES"
+    # menu bar: show remaining battery time (on pre-10.8); hide percentage
+    defaults write com.apple.menuextra.battery ShowPercent -string "NO"
+    defaults write com.apple.menuextra.battery ShowTime -string "YES"
 
-# enable snap-to-grid for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+    # enable snap-to-grid for icons on the desktop and in other icon views
+    /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+    /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+    /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
-## Spotlight ##
-# disable spotlight indexing for any volume that gets mounted and has not yet been indexed before.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+    ## Spotlight ##
+    # disable spotlight indexing for any volume that gets mounted and has not yet been indexed before.
+    sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
-# change indexing order and disable some file types
-defaults write com.apple.spotlight orderedItems -array \
-  '{"enabled" = 1;"name" = "APPLICATIONS";}' \
-  '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-  '{"enabled" = 1;"name" = "DIRECTORIES";}' \
-  '{"enabled" = 1;"name" = "PDF";}' \
-  '{"enabled" = 1;"name" = "FONTS";}' \
-  '{"enabled" = 0;"name" = "DOCUMENTS";}' \
-  '{"enabled" = 0;"name" = "MESSAGES";}' \
-  '{"enabled" = 0;"name" = "CONTACT";}' \
-  '{"enabled" = 0;"name" = "EVENT_TODO";}' \
-  '{"enabled" = 0;"name" = "IMAGES";}' \
-  '{"enabled" = 0;"name" = "BOOKMARKS";}' \
-  '{"enabled" = 0;"name" = "MUSIC";}' \
-  '{"enabled" = 0;"name" = "MOVIES";}' \
-  '{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-  '{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-  '{"enabled" = 0;"name" = "SOURCE";}'
+    # change indexing order and disable some file types
+    defaults write com.apple.spotlight orderedItems -array \
+      '{"enabled" = 1;"name" = "APPLICATIONS";}' \
+      '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+      '{"enabled" = 1;"name" = "DIRECTORIES";}' \
+      '{"enabled" = 1;"name" = "PDF";}' \
+      '{"enabled" = 1;"name" = "FONTS";}' \
+      '{"enabled" = 0;"name" = "DOCUMENTS";}' \
+      '{"enabled" = 0;"name" = "MESSAGES";}' \
+      '{"enabled" = 0;"name" = "CONTACT";}' \
+      '{"enabled" = 0;"name" = "EVENT_TODO";}' \
+      '{"enabled" = 0;"name" = "IMAGES";}' \
+      '{"enabled" = 0;"name" = "BOOKMARKS";}' \
+      '{"enabled" = 0;"name" = "MUSIC";}' \
+      '{"enabled" = 0;"name" = "MOVIES";}' \
+      '{"enabled" = 0;"name" = "PRESENTATIONS";}' \
+      '{"enabled" = 0;"name" = "SPREADSHEETS";}' \
+      '{"enabled" = 0;"name" = "SOURCE";}'
 
-# load new settings before rebuilding the index
-killall mds
+    # make sure indexing is enabled for the main volume
+    sudo mdutil -i on /
 
-# make sure indexing is enabled for the main volume
-sudo mdutil -i on /
-
-# rebuild the index from scratch
-sudo mdutil -E /
+    # rebuild the index from scratch
+    sudo mdutil -E /
 }
 
 _init_bak_files_and_folders() {
-  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.bashrc_local' $HOME
-  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitconfig' $HOME
-  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.gitignore' $HOME
-  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.netrc' $HOME
-  move_bak_files '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.sunlight.key' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.config' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.heroku' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.qgis2' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.scprv4' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.ssh' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.tarbell' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/bak_chris_files' 'bak_dotfiles' '.virtualenvs' $HOME
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitconfig' $HOME
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitignore' $HOME
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.netrc' $HOME
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.sunlight.key' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.config' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.heroku' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.scprv4' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.ssh' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.tarbell' $HOME
 }
 
 _init_bash_aliases() {
@@ -481,33 +476,31 @@ _init_bash_aliases() {
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 
-# _init_home_dir
-# _init_homebrew
+_init_home_dir
+_init_homebrew
+_init_sublime_text
+fancy_echo "Installing formulas and casks from the Brewfile ..."
+brew bundle
+_init_node
+_init_ruby
+_init_mysql
+_init_postgresql
+_init_python
+_init_bash_aliases
+_init_system_settings
+_init_qgis
+_init_bak_files_and_folders
 
-# fancy_echo "Installing formulas and casks from the Brewfile ..."
-# brew bundle
-
-# _init_node
-# _init_ruby
-# _init_python
-# _init_mysql
-# _init_postgresql
-# _init_qgis
-# _init_sublime_text
-# _init_bak_files_and_folders
-# _init_bash_aliases
-# _init_system_settings
+# install from local customizations file ##
+if [ -f "$HOME/.laptop.local" ]; then
+  . "$HOME/.laptop.local"
+fi
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."
 #   fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
 # elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
 #   open ~/Applications/GitHub\ Desktop.app
-# fi
-
-## install from local customizations file ##
-# if [ -f "$HOME/.laptop.local" ]; then
-#   . "$HOME/.laptop.local"
 # fi
 
 fancy_echo "Cleaning up Homebrew Cask downloads and tracker symlinks ..."

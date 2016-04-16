@@ -180,6 +180,7 @@ EOF
   fancy_echo '...Finished Node.js installation checks.'
 }
 
+# shellcheck disable=SC1090
 # install rubies and gems
 _init_ruby() {
   fancy_echo 'Checking on Ruby installation...'
@@ -230,10 +231,10 @@ EOF
   pip_install_or_update 'distribute'
   pip_install_or_update 'virtualenv'
   pip_install_or_update 'virtualenvwrapper'
-  append_to_file "$HOME/.bashrc" 'export WORKON_HOME=$HOME/.virtualenvs'
-  append_to_file "$HOME/.bashrc" 'export PIP_VIRTUALENV_BASE=$WORKON_HOME'
-  append_to_file "$HOME/.bashrc" 'export PIP_RESPECT_VIRTUALENV=true'
-  append_to_file "$HOME/.bashrc" 'source /usr/local/bin/virtualenvwrapper.sh'
+  append_to_file "$HOME/.bashrc" "export WORKON_HOME=$HOME/.virtualenvs"
+  append_to_file "$HOME/.bashrc" "export PIP_VIRTUALENV_BASE=$WORKON_HOME"
+  append_to_file "$HOME/.bashrc" "export PIP_RESPECT_VIRTUALENV=true"
+  append_to_file "$HOME/.bashrc" "source /usr/local/bin/virtualenvwrapper.sh"
   pip_install_or_update 'MySQL-python'
   pip_install_or_update 'psycopg2'
   pip_install_or_update 'csvkit'
@@ -295,7 +296,7 @@ _init_qgis() {
   else
     fancy_echo 'QGIS 2.8 already installed'
   fi
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.qgis2' $HOME
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.qgis2' "$HOME"
   fancy_echo '...Finished QGIS installation checks.'
 }
 
@@ -309,7 +310,7 @@ _init_sublime_text() {
   fi
 
   fancy_echo 'Downloading sublime-text-packages to Desktop…'
-  svn checkout https://github.com/chrislkeller/laptop/trunk/sublime-text-packages/ $HOME/Desktop
+  svn checkout https://github.com/chrislkeller/laptop/trunk/sublime-text-packages/ "$HOME/Desktop"
 
   fancy_echo 'Moving sublime-text-packages to Application Support…'
   mv ~/Desktop/Installed\ Packages ~/Library/Application\ Support/Sublime\ Text\ 3/Installed\ Packages
@@ -336,10 +337,10 @@ move_bak_files() {
   bak_folder="$2"
   bak_file="$3"
   new_location="$4"
-  if [ ! -f $new_location/$bak_file ]; then
+  if [ ! -f "$new_location/$bak_file" ]; then
     fancy_echo "$bak_file not found..."
     fancy_echo "Move $bak_file..."
-    cp -R $bak_path/$bak_folder/$bak_file $new_location/$bak_file
+    cp -R "$bak_path/$bak_folder/$bak_file" "$new_location/$bak_file"
   else
     fancy_echo "$bak_file already exists at $new_location/$bak_file..."
   fi
@@ -350,10 +351,10 @@ move_bak_directory() {
   bak_folder="$2"
   bak_directory="$3"
   new_location="$4"
-  if [ ! -d $new_location/$bak_directory ]; then
+  if [ ! -d "$new_location/$bak_directory" ]; then
     fancy_echo "$bak_directory not found..."
     fancy_echo "Move $bak_directory..."
-    cp -R $bak_path/$bak_folder/$bak_directory $new_location/$bak_directory
+    cp -R "$bak_path/$bak_folder/$bak_directory" "$new_location/$bak_directory"
   else
     fancy_echo "$bak_directory already exists at $new_location/$bak_directory..."
   fi
@@ -446,21 +447,21 @@ _init_system_settings() {
 }
 
 _init_bak_files_and_folders() {
-  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitconfig' $HOME
-  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitignore' $HOME
-  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.netrc' $HOME
-  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.sunlight.key' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.config' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.heroku' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.scprv4' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.ssh' $HOME
-  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.tarbell' $HOME
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitconfig' "$HOME"
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.gitignore' "$HOME"
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.netrc' "$HOME"
+  move_bak_files '/Users/ckeller/Desktop/' 'bak_dotfiles' '.sunlight.key' "$HOME"
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.config' "$HOME"
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.heroku' "$HOME"
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.scprv4' "$HOME"
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.ssh' "$HOME"
+  move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.tarbell' "$HOME"
 }
 
 _init_bash_aliases() {
-  append_to_file "$HOME/.bash_profile" $'# include .bashrc if it exists\nif [ -f ~/.bashrc ] ; then\n  source ~/.bashrc\nfi'
-  append_to_file "$HOME/.bash_profile" $'# adds bashcompletion\nif [ -f $(brew --prefix)/etc/bash_completion.d ]; then\n  $(brew --prefix)/etc/bash_completion.d\nfi'
-  append_to_file "$HOME/.bashrc" $'# include .bash_local if it exists\nif [ -f ~/.bash_local ] ; then\n  source ~/.bash_local\nfi'
+  append_to_file "$HOME/.bash_profile" '# include .bashrc if it exists\nif [ -f ~/.bashrc ] ; then\n  source ~/.bashrc\nfi'
+  append_to_file "$HOME/.bash_profile" "# adds bashcompletion\nif [ -f $(brew --prefix)/etc/bash_completion.d ]; then\n  $(brew --prefix)/etc/bash_completion.d\nfi"
+  append_to_file "$HOME/.bashrc" '# include .bash_local if it exists\nif [ -f ~/.bash_local ] ; then\n  source ~/.bash_local\nfi'
 
   if [ ! -f ~/.bash_local ]; then
     fancy_echo "Downloading .bash_local..."
@@ -491,6 +492,7 @@ _init_system_settings
 _init_qgis
 _init_bak_files_and_folders
 
+# shellcheck disable=SC1090
 # install from local customizations file ##
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"

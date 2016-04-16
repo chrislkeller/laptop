@@ -1,7 +1,7 @@
 Laptop
 ======
 
-~~[![Build Status](https://travis-ci.org/18F/laptop.svg)](https://travis-ci.org/18F/laptop)~~
+[![Build Status](https://travis-ci.org/chrislkeller/laptop.svg?branch=master)](https://travis-ci.org/chrislkeller/laptop)
 
 Laptop is a script to set up an OS X computer for web development.
 

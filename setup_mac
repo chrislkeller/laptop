@@ -289,12 +289,13 @@ _init_postgresql() {
 # install qgis
 _init_qgis() {
   fancy_echo 'Checking on QGIS installation...'
-  if ! brew_is_installed "qgis-28"; then
-    fancy_echo 'Installing QGIS 2.8'
-    brew install qgis-28 --with-grass --with-postgis
-    brew linkapps qgis-28
+  if ! brew_is_installed "qgis-214"; then
+    fancy_echo 'Installing QGIS 2.14'
+    brew -v install qgis-214 --with-r --with-grass --with-postgis --with-saga-gis --without-server
+    # brew install qgis-28 --with-grass --with-postgis
+    brew linkapps qgis-214
   else
-    fancy_echo 'QGIS 2.8 already installed'
+    fancy_echo 'QGIS 2.14 already installed'
   fi
   move_bak_directory '/Users/ckeller/Desktop/' 'bak_dotfiles' '.qgis2' "$HOME"
   fancy_echo '...Finished QGIS installation checks.'
@@ -477,26 +478,26 @@ _init_bash_aliases() {
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 
-_init_home_dir
-_init_homebrew
-_init_sublime_text
-fancy_echo "Installing formulas and casks from the Brewfile ..."
-brew bundle
-_init_node
-_init_ruby
-_init_mysql
-_init_postgresql
+# _init_home_dir
+# _init_homebrew
+# _init_sublime_text
+# fancy_echo "Installing formulas and casks from the Brewfile ..."
+# brew bundle
+# _init_node
+# _init_ruby
+# _init_mysql
+# _init_postgresql
 _init_python
-_init_bash_aliases
-_init_system_settings
-_init_qgis
-_init_bak_files_and_folders
+# _init_bash_aliases
+# _init_system_settings
+# _init_qgis
+# _init_bak_files_and_folders
 
 # shellcheck disable=SC1090
 # install from local customizations file ##
-if [ -f "$HOME/.laptop.local" ]; then
-  . "$HOME/.laptop.local"
-fi
+# if [ -f "$HOME/.laptop.local" ]; then
+#   . "$HOME/.laptop.local"
+# fi
 
 # if app_is_installed 'GitHub'; then
 #   fancy_echo "It looks like you've already configured your GitHub SSH keys."

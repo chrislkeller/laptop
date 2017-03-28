@@ -6,6 +6,14 @@ tap 'homebrew/services'
 
 tap 'homebrew/dupes'
 
+tap 'caskroom/cask'
+
+tap 'caskroom/versions'
+
+tap 'homebrew/science'
+
+tap 'osgeo/osgeo4mac'
+
 brew 'shellcheck'
 
 brew 'ack'
@@ -34,23 +42,17 @@ brew 'redis'
 
 brew 'sqlite'
 
-tap 'caskroom/cask'
-
-tap 'caskroom/versions'
+brew 'r'
 
 cask 'xquartz'
 
 cask 'java'
 
-tap 'homebrew/science'
-
-tap 'osgeo/osgeo4mac'
-
-brew 'r'
+brew 'elasticsearch'
 
 cask 'slack'
 
-#cask 'sublime-text3'
+cask 'sublime-text3'
 
 cask 'atom'
 
@@ -77,3 +79,59 @@ cask 'sequel-pro'
 cask 'sqlitebrowser'
 
 cask 'dropbox'
+
+cask 'firefox'
+
+cask 'color-oracle'
+
+cask 'ccleaner'
+
+cask 'appcleaner'
+
+cask 'fluid'
+
+cask 'vlc'
+
+cask 'skype'
+
+cask 'namechanger'
+
+cask 'hiss'
+
+cask 'adium'
+
+cask 'arduino'
+
+cask 'audacity'
+
+cask 'opera'
+
+cask 'google-drive'
+
+cask 'virtualbox'
+
+cask 'vagrant'
+
+cask 'calibre'
+
+cask 'colorpicker'
+
+cask 'colorpicker-hex'
+
+cask 'openoffice'
+
+cask 'mou'
+
+cask 'media-converter'
+
+cask 'sigil'
+
+cask 'spotify'
+
+cask 'evernote'
+
+cask 'cyberduck'
+
+cask 'adapter'
+
+cask 'audio-hijack-pro'
